@@ -1,0 +1,6 @@
+/* 水平间距 */
+/* 水平间距 */
+.user {
+  flex: 1;
+  text-align: right;
+}

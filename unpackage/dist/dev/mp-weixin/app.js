@@ -2,7 +2,14 @@
 Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
 const common_vendor = require("./common/vendor.js");
 if (!Math) {
-  "./pages/index/index.js";
+  "./pages/login/login.js";
+  "./pages/protocol/protocol.js";
+  "./pages/info/info.js";
+  "./pages/doc_info/doc_info.js";
+  "./pages/function/function.js";
+  "./pages/detection/detection.js";
+  "./pages/communicate/communicate.js";
+  "./pages/result/result.js";
 }
 const _sfc_main = {
   onLaunch: function() {
@@ -19,8 +26,11 @@ const _sfc_main = {
 const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/uni_app playground/pain_detect/App.vue"]]);
 function createApp() {
   const app = common_vendor.createSSRApp(App);
+  const store = common_vendor.createPinia();
+  app.use(store);
   return {
-    app
+    app,
+    Pinia: common_vendor.Pinia
   };
 }
 createApp().app.mount("#app");

@@ -1,0 +1,1 @@
+<view class="main"><text class="title_1">早上好！{{a}}</text><view class=""><text class="title_2">欢迎登录疼痛分级系统</text></view><view><image bindtap="{{b}}" src="/static/function1.jpg" mode=""></image><image bindtap="{{c}}" src="/static/function2.jpg" mode=""></image><image bindtap="{{d}}" src="/static/function3.jpg" mode=""></image></view></view>

@@ -1,0 +1,64 @@
+/* 水平间距 */
+/* 水平间距 */
+.title_1 {
+  font-size: 25px;
+  text-align: center;
+}
+.title_2 {
+  font-size: 17px;
+  text-align: center;
+  margin: 10px;
+}
+image {
+  width: 200px;
+  height: 150px;
+  margin-top: 200rpx;
+}
+.protocol {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100rpx;
+}
+.protocol_text {
+  font-size: 10px;
+  font-weight: 400;
+}
+.wx-radio-input {
+  width: 24rpx !important;
+  height: 24rpx !important;
+}
+.radio {
+  margin-top: -10rpx;
+}
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.button_left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: #52D4A2 solid 1px;
+  border-radius: 5%;
+  color: #52D4A2;
+  font-size: 40rpx;
+  height: 112rpx;
+  width: 350rpx;
+  margin-top: 50rpx;
+  margin-right: 20rpx;
+}
+.button_right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: #52D4A2 solid 1px;
+  background-color: #52D4A2;
+  border-radius: 5%;
+  color: white;
+  font-size: 40rpx;
+  height: 112rpx;
+  width: 350rpx;
+  margin-top: 50rpx;
+}

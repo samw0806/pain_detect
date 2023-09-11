@@ -1,0 +1,1 @@
+<view><view class="user"><view class="" style="display:inline-block"><image src="/static/user.png" mode="" style="height:50rpx;width:50rpx"></image></view><view class="text" style="display:inline-block"><text style="line-height:100rpx">{{a}}</text></view></view><image src="{{b}}" mode=""></image></view>

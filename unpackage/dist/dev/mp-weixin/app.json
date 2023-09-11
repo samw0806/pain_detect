@@ -1,6 +1,13 @@
 {
   "pages": [
-    "pages/index/index"
+    "pages/login/login",
+    "pages/protocol/protocol",
+    "pages/info/info",
+    "pages/doc_info/doc_info",
+    "pages/function/function",
+    "pages/detection/detection",
+    "pages/communicate/communicate",
+    "pages/result/result"
   ],
   "window": {
     "navigationBarTextStyle": "black",

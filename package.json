@@ -1,0 +1,26 @@
+{
+  "name": "pain_detect",
+  "version": "1.0.0",
+  "description": "A mini program for pain detection",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samw0806/pain_detect.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samw0806/pain_detect/issues"
+  },
+  "homepage": "https://github.com/samw0806/pain_detect#readme",
+  "dependencies": {
+    "@escook/request-miniprogram": "^0.2.1"
+  },
+  "devDependencies": {
+    "pinia-plugin-unistorage": "^0.0.17"
+  }
+}
