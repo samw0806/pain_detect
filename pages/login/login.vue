@@ -8,7 +8,7 @@
 		</view>
 		
 		<view class=".protocol">
-			<image src="../../static/login.jpg" mode=""></image>
+			<image src="../../static/logo.jpg" mode=""></image>
 		</view>
 		
 		
@@ -89,7 +89,7 @@
 	}
 	
 	image{
-		width: 200px;
+		width: 220px;
 		height: 150px;
 		margin-top: 200rpx;
 	}
@@ -106,8 +106,8 @@
 	}
 	
 	.wx-radio-input {
-	  width: 24rpx !important;
-	  height: 24rpx !important;
+	  width: 15rpx !important;
+	  height: 15rpx !important;
 	}
 	
 	.radio{
@@ -120,9 +120,9 @@
 	
 	.button_left{
 		@include medium();
-		border: #52D4A2 solid 1px;
+		border: $primary solid 1px;
 		border-radius: 5%;
-		color: #52D4A2;
+		color: $primary;
 		font-size: 40rpx;
 		height: 112rpx;
 		width: 350rpx;
@@ -132,8 +132,7 @@
 	
 	.button_right{
 		@include medium();
-		border: #52D4A2 solid 1px;
-		background-color: #52D4A2;
+		background-color: $primary;
 		border-radius: 5%;
 		color: white;
 		font-size: 40rpx;

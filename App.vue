@@ -18,6 +18,7 @@
 	@import '@/uni_modules/uni-scss/index.scss';
 	/* #ifndef APP-NVUE */
 	@import '@/static/customicons.css';
+	@import '@/static/scss/common.scss';
 	page {
 		background-color: #f5f5f5;
 	}

@@ -7,7 +7,11 @@
     "pages/function/function",
     "pages/detection/detection",
     "pages/communicate/communicate",
-    "pages/result/result"
+    "pages/result/result",
+    "pages/vas/vas",
+    "pages/function_doc/function_doc",
+    "pages/detection_doc/detection_doc",
+    "pages/communicate_doc/communicate_doc"
   ],
   "window": {
     "navigationBarTextStyle": "black",

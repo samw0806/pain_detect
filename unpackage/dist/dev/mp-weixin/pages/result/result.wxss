@@ -1,6 +1,19 @@
 /* 水平间距 */
 /* 水平间距 */
+.main {
+  margin: 30rpx;
+}
 .user {
   flex: 1;
   text-align: right;
+}
+.text {
+  font-size: 30rpx;
+}
+.buttom {
+  display: grid;
+  margin-top: -20rpx;
+}
+.medium {
+  margin: auto;
 }

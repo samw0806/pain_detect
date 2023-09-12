@@ -10,7 +10,7 @@
   margin: 10px;
 }
 image {
-  width: 200px;
+  width: 220px;
   height: 150px;
   margin-top: 200rpx;
 }
@@ -25,8 +25,8 @@ image {
   font-weight: 400;
 }
 .wx-radio-input {
-  width: 24rpx !important;
-  height: 24rpx !important;
+  width: 15rpx !important;
+  height: 15rpx !important;
 }
 .radio {
   margin-top: -10rpx;
@@ -53,7 +53,6 @@ image {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: #52D4A2 solid 1px;
   background-color: #52D4A2;
   border-radius: 5%;
   color: white;

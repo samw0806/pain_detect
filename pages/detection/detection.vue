@@ -1,7 +1,7 @@
 <template>
 	<view class="main">
-		<view class="user">
-			<view class="" style="display: inline-block;">
+		<view class="user" style="margin-top: -30rpx;">
+			<view class="" style="display: inline-block;vertical-align:-16rpx;">
 				<image src="../../static/user.png" mode="" style="height: 50rpx;width: 50rpx;"></image>
 			</view>
 			
@@ -10,7 +10,7 @@
 			</view>
 		</view>
 		
-		<view class="" style="display: grid;">
+		<view class="" style="display: grid;margin-top: 30rpx;">
 			<view class="" style="margin: auto;">
 				请上传您的正脸照
 			</view>
@@ -40,8 +40,8 @@
 			</view>
 			
 			<button @click="handleProcess" size="default" type="default"
-			style="color:#ffffff;backgroundColor:#52D4A2;border-radius: 10;margin-top: 50rpx;" 
-			hover-class="is-hover">开始检测<uni-icons type="forward" size="20" color="white"></uni-icons></button>
+			style="color:#ffffff;font-size:35rpx;height: 90rpx;;backgroundColor:#52D4A2;border-radius: 10;margin-top: 50rpx;" 
+			hover-class="is-hover">开始检测<uni-icons type="forward" size="15" color="white"></uni-icons></button>
 		</view>
 		
 	</view>

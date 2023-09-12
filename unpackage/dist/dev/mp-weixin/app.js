@@ -10,6 +10,10 @@ if (!Math) {
   "./pages/detection/detection.js";
   "./pages/communicate/communicate.js";
   "./pages/result/result.js";
+  "./pages/vas/vas.js";
+  "./pages/function_doc/function_doc.js";
+  "./pages/detection_doc/detection_doc.js";
+  "./pages/communicate_doc/communicate_doc.js";
 }
 const _sfc_main = {
   onLaunch: function() {

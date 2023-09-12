@@ -51,7 +51,7 @@ const _sfc_main = {
         d: common_vendor.o((...args) => _ctx.handleCamera && _ctx.handleCamera(...args)),
         e: common_vendor.p({
           type: "forward",
-          size: "20",
+          size: "15",
           color: "white"
         }),
         f: common_vendor.o(handleProcess)
