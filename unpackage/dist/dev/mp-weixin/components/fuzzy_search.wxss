@@ -1,0 +1,34 @@
+/* 水平间距 */
+/* 水平间距 */
+.index.data-v-7fa62808 {
+  width: 100%;
+  position: absolute;
+  z-index: 9;
+}
+.search .list.data-v-7fa62808,
+.search .empty.data-v-7fa62808 {
+  padding: 10rpx;
+  background-color: #fff;
+  box-shadow: 0 0 10rpx #888;
+  border-radius: 10rpx;
+}
+.search .list.data-v-7fa62808 {
+  box-sizing: border-box;
+  max-height: 300rpx;
+  overflow: hidden;
+}
+.search .list .item.data-v-7fa62808 {
+  padding: 8rpx 0;
+  font-size: 26rpx;
+  margin: 5rpx 0;
+}
+.search .list .item-hover.data-v-7fa62808 {
+  background-color: #f5f5f5;
+}
+.search .empty.data-v-7fa62808 {
+  height: 80rpx;
+  font-size: 26rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

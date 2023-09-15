@@ -33,9 +33,43 @@ app.$mount()
 
 // #ifdef VUE3
 import { createSSRApp } from 'vue'
+import App from './App.vue'
+
+//状态存储管理
 import * as Pinia from 'pinia'
 import { createUnistorage } from 'pinia-plugin-unistorage'
-import App from './App.vue'
+
+//网络请求管理
+import { $http } from '@escook/request-miniprogram'
+//从网络请求包中引入$http请求对象
+uni.$http = $http
+//配置请求根路径
+$http.baseUrl = ''
+
+//请求拦截器
+$http.beforeRequest = function(options) {
+	uni.showLoading({
+		title: '数据加载中...'
+	})
+	// if(options.url === '/login'){
+	// 	return options
+	// }
+	// if(!uni.getStorageSync('token')){
+	// 	uni.redirectTo({
+	// 		url:'/pages/login/login'
+	// 	})
+	// 	return false
+	// }
+	
+}
+
+//响应拦截器
+$http.afterRequest = function (){
+	uni.hideLoading()
+}
+
+
+
 export function createApp() {
   const app = createSSRApp(App)
   const store = Pinia.createPinia()

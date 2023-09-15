@@ -56,7 +56,7 @@
 	const upload = ref(false)
 	
 	const user = reactive({
-		name:'病患1231'
+		name:'张远'
 	})
 	
 	function handleUpload(){
@@ -95,7 +95,7 @@
 		}
 		else{
 			uni.navigateTo({
-			    url: '/pages/result_doc/result_doc'
+			    url: '/pages/edit_info/edit_info'
 			});
 		}
 	}

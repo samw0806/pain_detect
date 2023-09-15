@@ -15,7 +15,7 @@ const _sfc_main = {
     const uploadStoreTemp = stores_upload.uploadStore();
     const upload = common_vendor.ref(false);
     const user = common_vendor.reactive({
-      name: "病患1231"
+      name: "张远"
     });
     function handleUpload() {
       common_vendor.index.chooseImage({
@@ -39,7 +39,7 @@ const _sfc_main = {
         });
       } else {
         common_vendor.index.navigateTo({
-          url: "/pages/result_doc/result_doc"
+          url: "/pages/edit_info/edit_info"
         });
       }
     }

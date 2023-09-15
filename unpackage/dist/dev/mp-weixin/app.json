@@ -11,7 +11,10 @@
     "pages/vas/vas",
     "pages/function_doc/function_doc",
     "pages/detection_doc/detection_doc",
-    "pages/communicate_doc/communicate_doc"
+    "pages/communicate_doc/communicate_doc",
+    "pages/search/search",
+    "pages/chart/chart",
+    "pages/edit_info/edit_info"
   ],
   "window": {
     "navigationBarTextStyle": "black",

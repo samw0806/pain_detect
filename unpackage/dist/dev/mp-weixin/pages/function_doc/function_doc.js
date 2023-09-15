@@ -14,7 +14,7 @@ const _sfc_main = {
     return (_ctx, _cache) => {
       return {
         a: common_vendor.t(user.name),
-        b: common_vendor.o(($event) => handleClick("/pages/detection_doc/detection_doc")),
+        b: common_vendor.o(($event) => handleClick("/pages/search/search")),
         c: common_vendor.o(($event) => handleClick("/pages/communicate_doc/communicate_doc")),
         d: common_vendor.o(($event) => handleClick("/pages/doc_info/doc_info"))
       };
