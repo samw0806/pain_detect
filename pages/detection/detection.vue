@@ -65,7 +65,6 @@
 		    sizeType: ['original', 'compressed'],
 		    sourceType: ['album'], //这要注意，camera掉拍照，album是打开手机相册
 		    success: (res)=> {
-				console.log(res);
 				uploadStoreTemp.setUploadImage(res.tempFilePaths) 
 				upload.value = true				
 		    }

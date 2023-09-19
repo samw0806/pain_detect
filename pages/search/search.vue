@@ -5,7 +5,9 @@
 	<view class="test">
 			<view style="text-align: center;">选中值：{{ selectData }}</view>
 			<view class="content">
-				<input class="input" type="text" :value="value" placeholder="请输入内容" @input="input" />
+				<view class="" style="">
+					<uni-easyinput :styles="inputStyles" style=""  suffixIcon="search" v-model="value" placeholder="右侧图标" @iconClick="iconClick"></uni-easyinput>
+				</view>		
 				<fuzzysearch
 					label-name="name"
 					value-name="id"
@@ -30,8 +32,15 @@
 	import fuzzysearch from '@/components/fuzzy_search.vue'
 	import debounce from '@/common/js/debounce.js'; //防抖函数
 	import { httpGetList } from '@/common/js/api.js';
-	import { reactive, ref } from "vue";
+	import { reactive , ref , watch } from "vue";
+	import {searchStore} from '@/stores/search.js'
+import { uploadStore } from '../../stores/upload';
 	
+	const searchStoreTemp = searchStore()
+	
+	const inputStyles = {
+		borderColor:"black",
+	}
 	const value = ref('')
 	const show = ref(false)
 	const selectData = ref(null)
@@ -41,6 +50,10 @@
 		list:[]
 	})
 	
+	watch(() => value.value, (newVal)=>{
+		queryParams.pageNum = 1
+		debounce(getList(),500)
+	})
 	
 	function handleNext(){
 		uni.navigateTo({
@@ -79,6 +92,25 @@
 			value.value = event.name;
 			selectData.value = JSON.stringify(event);
 		}
+	
+	async function iconClick(){
+		const{data:res} = await uni.$http.post('/search',value.value)
+		if(red.code == 200){
+			console.log('请求成功');
+			searchStoreTemp.setSearchInfo(res.data)
+			uni.navigateTo({
+				url:'/pages/detection_doc/detection_doc'
+			})
+			console.log(searchStoreTemp.searchInfo);
+		}
+		else{
+			uni.showToast({
+				title:'请检查网络',
+				icon:'error',
+				duration:2000
+			})
+		}
+	}
 	
 	
 </script>
