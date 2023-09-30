@@ -16,4 +16,5 @@
 }
 .medium {
   margin: auto;
+  font-size: 50rpx;
 }

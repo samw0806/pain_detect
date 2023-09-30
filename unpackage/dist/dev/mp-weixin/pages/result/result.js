@@ -30,6 +30,9 @@ const _sfc_main = {
       user.name = searchStoreTemp.searchInfo.user_name;
       image.value = uploadStoreTemp.uploadImage;
     });
+    function handleBack() {
+      common_vendor.index.navigateBack();
+    }
     function handleNextStep() {
       common_vendor.index.navigateTo({
         url: "/pages/vas/vas"
@@ -45,12 +48,13 @@ const _sfc_main = {
           size: "20",
           color: "#339EE6"
         }),
-        e: common_vendor.p({
+        e: common_vendor.o(handleBack),
+        f: common_vendor.p({
           type: "forward",
           size: "15",
           color: "white"
         }),
-        f: common_vendor.o(handleNextStep)
+        g: common_vendor.o(handleNextStep)
       };
     };
   }

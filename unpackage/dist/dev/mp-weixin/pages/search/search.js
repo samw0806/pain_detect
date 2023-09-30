@@ -87,7 +87,7 @@ const _sfc_main = {
         d: common_vendor.p({
           styles: inputStyles,
           suffixIcon: "search",
-          placeholder: "右侧图标",
+          placeholder: "请输入病患名称",
           modelValue: value.value
         }),
         e: common_vendor.o(scrolltolower),

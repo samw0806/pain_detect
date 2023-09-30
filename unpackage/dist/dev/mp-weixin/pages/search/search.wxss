@@ -2,6 +2,7 @@
 /* 水平间距 */
 .title.data-v-c10c040c {
   text-align: center;
+  font-size: 50rpx;
 }
 .test.data-v-c10c040c {
   width: 100vw;
@@ -14,16 +15,14 @@
   margin: 0 auto;
   position: relative;
 }
-.content .input.data-v-c10c040c {
-  padding: 25rpx;
-  background-color: #f5f5f5;
-  border: black solid 6rpx;
-  border-radius: 20rpx;
-}
-.content .button.data-v-c10c040c {
+.button.data-v-c10c040c {
+  width: 600rpx;
   border-radius: 23rpx;
   color: #ffffff;
   background-color: #52D4A2;
-  margin-top: 580rpx;
+  position: fixed;
+  bottom: 100rpx;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 40rpx;
 }

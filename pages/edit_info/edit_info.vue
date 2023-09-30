@@ -156,7 +156,8 @@
 	@import '../../static/scss/common.scss';
 	 
 	 .title{
-		 @include medium
+		 @include medium;
+		 font-size: 50rpx;
 	 }
 	 
 	 .form-group{

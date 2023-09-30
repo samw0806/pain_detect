@@ -103,6 +103,11 @@ const _sfc_main = {
         if (searchStoreTemp.login === false) {
           const { data: res } = await common_vendor.index.$http.post("/v1/user", inputValues);
           console.log(res);
+          common_vendor.index.showToast({
+            title: res.msg,
+            icon: "error",
+            duration: 2e3
+          });
           searchStoreTemp.setLogin(true);
           if (res.code === "10000101") {
             console.log(1111);

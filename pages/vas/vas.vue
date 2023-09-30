@@ -96,7 +96,10 @@
 	
 	.buttom{
 		display: grid;
-		margin-top: 20rpx;
+		position: fixed;
+		bottom: 100rpx;
+		left: 50%;
+		transform: translateX(-50%);
 	}
 	
 	.medium{

@@ -11,11 +11,11 @@
 		</view>
 		
 		<view class="" style="display: grid;margin-top: 30rpx;">
-			<view class="" style="margin: auto;">
+			<view class="" style="margin: auto;font-size: 50rpx;">
 				请上传您的正脸照
 			</view>
 			<view class="" style="margin: 50rpx auto;">
-				<image @click="handleUpload" src="../../static/upload.jpg" mode="" style="height: 550rpx;width: 570rpx;"></image>
+				<image @click="handleUpload" :src="img" mode="" style="height: 550rpx;width: 570rpx;"></image>
 			</view>
 			<view class="buttom" style="margin: auto;">
 				<view @click="handleUpload" class="" style="display: inline-block; margin-right: 80rpx;">
@@ -55,6 +55,8 @@
 	const uploadStoreTemp = uploadStore()
 	
 	const upload = ref(false)
+	
+	const img = ref('../../static/upload.jpg')
 		
 	const searchStoreTemp = searchStore()
 	onMounted(()=>{
@@ -71,6 +73,12 @@
 		    sizeType: ['original', 'compressed'],
 		    sourceType: ['album'], //这要注意，camera掉拍照，album是打开手机相册
 		    success: (res)=> {
+				uni.showToast({
+					title:'上传中...',
+					icon:'loading',
+					duration:2000
+				})
+				img.value = '../../static/right.jpg'
 				uploadStoreTemp.setUploadImage(res.tempFilePaths) 
 				upload.value = true		
 

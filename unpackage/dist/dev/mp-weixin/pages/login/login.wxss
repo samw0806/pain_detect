@@ -1,20 +1,30 @@
 /* 水平间距 */
 /* 水平间距 */
 .title_1 {
-  font-size: 25px;
+  font-size: 35px;
   text-align: center;
 }
 .title_2 {
-  font-size: 17px;
+  font-size: 25px;
   text-align: center;
   margin: 10px;
 }
 image {
-  width: 220px;
-  height: 150px;
+  width: 280px;
+  height: 190px;
   margin-top: 200rpx;
 }
 .protocol {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 260rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500rpx;
+}
+.pic {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -35,13 +45,17 @@ image {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  bottom: 120rpx;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .button_left {
   display: flex;
   justify-content: center;
   align-items: center;
   border: #52D4A2 solid 1px;
-  border-radius: 5%;
+  border-radius: 10rpx;
   color: #52D4A2;
   font-size: 40rpx;
   height: 112rpx;
@@ -54,7 +68,7 @@ image {
   justify-content: center;
   align-items: center;
   background-color: #52D4A2;
-  border-radius: 5%;
+  border-radius: 10rpx;
   color: white;
   font-size: 40rpx;
   height: 112rpx;

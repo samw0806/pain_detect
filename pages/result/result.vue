@@ -25,7 +25,7 @@
 				
 				<image :load="image==''? true : false" class="medium" :src="image" mode="" style="height: 700rpx;width: 650rpx;margin-top: 20rpx;"></image>
 				
-				<view class="medium" style="font-size: 30rpx;margin-top: 20rpx;">
+				<view @click="handleBack" class="medium" style="font-size: 30rpx;margin-top: 20rpx;">
 					<uni-icons type="refresh-filled" size="20" color="#339EE6" style="display: inline-block;vertical-align:-8rpx;"></uni-icons>
 					<view class="" style="display: inline-block;color: #339EE6;font-weight: 400;">
 						重新检测
@@ -69,7 +69,9 @@
 		image.value = uploadStoreTemp.uploadImage
 	})
 	
-
+	function handleBack(){
+		uni.navigateBack()
+	}
 	
 	function handleNextStep(){
 		uni.navigateTo({
@@ -101,6 +103,7 @@
 	
 	.medium{
 		margin: auto;
+		font-size: 50rpx;
 	}
 	
 	

@@ -6,7 +6,7 @@
 			<view style="text-align: center;">选中值：{{ selectData }}</view>
 			<view class="content">
 				<view class="" style="">
-					<uni-easyinput :styles="inputStyles" style=""  suffixIcon="search" v-model="value" placeholder="右侧图标" @iconClick="iconClick"></uni-easyinput>
+					<uni-easyinput :styles="inputStyles" style=""  suffixIcon="search" v-model="value" placeholder="请输入病患名称" @iconClick="iconClick"></uni-easyinput>
 				</view>		
 				<fuzzysearch
 					label-name="name"
@@ -118,6 +118,7 @@ import { uploadStore } from '../../stores/upload';
 <style lang="scss" scoped>
 .title{
 	text-align: center;
+	font-size: 50rpx;
 }
 .test {
 	width: 100vw;
@@ -130,18 +131,16 @@ import { uploadStore } from '../../stores/upload';
 	margin: 0 auto;
 	position: relative;
 
-	.input {
-		padding: 25rpx;
-		background-color: #f5f5f5;
-		border: black solid 6rpx;
-		border-radius: 20rpx;
-	}
-	.button {
+}
+.button {
+		width: 600rpx;
 		border-radius: 23rpx;
 		color:#ffffff;
 		background-color:#52D4A2;
-		margin-top: 580rpx;
+		position: fixed;
+		bottom: 100rpx;
+		left: 50%;
+		transform: translateX(-50%);
 		font-size: 40rpx;
 	}
-}
 </style>

@@ -11,7 +11,7 @@
 		</view>
 		
 		<view class="" style="display: grid;margin-top: 30rpx;">
-			<view class="" style="margin: auto;">
+			<view class="" style="margin: auto;font-size: 50rpx;">
 				请上传您的正脸照
 			</view>
 			<view class="" style="margin: 50rpx auto;">

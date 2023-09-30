@@ -4,6 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 50rpx;
 }
 .form-group {
   margin-top: 50rpx;

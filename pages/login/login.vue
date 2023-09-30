@@ -7,7 +7,7 @@
 			疼痛分级系统
 		</view>
 		
-		<view class=".protocol">
+		<view class="pic">
 			<image src="../../static/logo.jpg" mode=""></image>
 		</view>
 		
@@ -87,23 +87,32 @@
 	}
 	
 	.title_1{
-		font-size: 25px;
+		font-size: 35px;
 		text-align: center;//针对行内元素
 	}
 	
 	.title_2{
-		font-size: 17px;
+		font-size: 25px;
 		text-align: center;//针对行内元素
 		margin: 10px;
 	}
 	
 	image{
-		width: 220px;
-		height: 150px;
+		width: 280px;
+		height: 190px;
 		margin-top: 200rpx;
 	}
 	
 	.protocol{
+		@include medium;
+		position: fixed;
+		bottom: 260rpx;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 500rpx;
+	}
+	
+	.pic{
 		@include medium;
 		margin-top: 100rpx;
 	}
@@ -125,12 +134,16 @@
 	
 	.button{
 		@include medium();
+		position: fixed;
+		bottom: 120rpx;
+		left: 50%;
+		transform: translateX(-50%);
 	}
 	
 	.button_left{
 		@include medium();
 		border: $primary solid 1px;
-		border-radius: 5%;
+		border-radius: 10rpx;
 		color: $primary;
 		font-size: 40rpx;
 		height: 112rpx;
@@ -142,7 +155,7 @@
 	.button_right{
 		@include medium();
 		background-color: $primary;
-		border-radius: 5%;
+		border-radius: 10rpx;
 		color: white;
 		font-size: 40rpx;
 		height: 112rpx;

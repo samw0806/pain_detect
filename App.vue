@@ -20,7 +20,8 @@
 	@import '@/static/customicons.css';
 	@import '@/static/scss/common.scss';
 	page {
-		background-color: #f5f5f5;
+		background-color: #ffffff;
+		margin-top: 50rpx;
 	}
 	view {
 		font-weight: 600;

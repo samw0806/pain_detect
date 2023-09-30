@@ -15,6 +15,7 @@ const _sfc_main = {
   setup(__props) {
     const uploadStoreTemp = stores_upload.uploadStore();
     const upload = common_vendor.ref(false);
+    const img = common_vendor.ref("../../static/upload.jpg");
     const searchStoreTemp = stores_search.searchStore();
     common_vendor.onMounted(() => {
       user.name = searchStoreTemp.searchInfo.user_name;
@@ -29,6 +30,12 @@ const _sfc_main = {
         sourceType: ["album"],
         //这要注意，camera掉拍照，album是打开手机相册
         success: (res) => {
+          common_vendor.index.showToast({
+            title: "上传中...",
+            icon: "loading",
+            duration: 2e3
+          });
+          img.value = "../../static/right.jpg";
           uploadStoreTemp.setUploadImage(res.tempFilePaths);
           upload.value = true;
         }
@@ -64,14 +71,15 @@ const _sfc_main = {
       return {
         a: common_vendor.t(user.name),
         b: common_vendor.o(handleUpload),
-        c: common_vendor.o(handleUpload),
-        d: common_vendor.o((...args) => _ctx.handleCamera && _ctx.handleCamera(...args)),
-        e: common_vendor.p({
+        c: img.value,
+        d: common_vendor.o(handleUpload),
+        e: common_vendor.o((...args) => _ctx.handleCamera && _ctx.handleCamera(...args)),
+        f: common_vendor.p({
           type: "forward",
           size: "15",
           color: "white"
         }),
-        f: common_vendor.o(handleProcess)
+        g: common_vendor.o(handleProcess)
       };
     };
   }

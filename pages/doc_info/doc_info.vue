@@ -151,7 +151,8 @@
 	@import '../../static/scss/common.scss';
 	 
 	 .title{
-		 @include medium
+		 @include medium;
+		 font-size: 50rpx;
 	 }
 	 
 	 .form-group{
@@ -162,8 +163,10 @@
 	 }
 	 
 	 .button{
-		margin-left: 27rpx;
-		margin-top: 50rpx;
+		position: fixed;
+		bottom: 20rpx;
+		left: 50%;
+		transform: translateX(-50%);
 		width: 700rpx;
 		height: 200rpx;
 		
