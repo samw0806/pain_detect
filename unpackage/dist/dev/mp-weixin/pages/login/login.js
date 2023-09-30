@@ -1,8 +1,10 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+const stores_search = require("../../stores/search.js");
 const _sfc_main = {
   __name: "login",
   setup(__props) {
+    const searchStoreTemp = stores_search.searchStore();
     const state = common_vendor.ref(false);
     function checkboxChange(e) {
       if (state.value == false) {
@@ -19,6 +21,11 @@ const _sfc_main = {
           duration: 2e3
         });
       } else {
+        if (url == "/pages/info/info") {
+          searchStoreTemp.setSearchUsertype("patient");
+        } else {
+          searchStoreTemp.setSearchUsertype("doctor");
+        }
         common_vendor.index.navigateTo({
           url
         });

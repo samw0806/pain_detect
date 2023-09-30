@@ -11,13 +11,17 @@
 		</view>
 		
 		<view class="buttom">
-
+				
 				<view class="medium" style="margin: auto;">
+					图片展示
+				</view>
+				
+<!-- 				<view class="medium" style="margin: auto;">
 					检测结果
 				</view>
 				<view class="medium" style="color: white;background-color: red;border-radius:8%;width: 200rpx;height: 60rpx;font-size: 35rpx;text-align: center;margin-top: 20rpx;font-weight: 500;line-height: 60rpx;">
 					二级疼痛
-				</view>
+				</view> -->
 				
 				<image :load="image==''? true : false" class="medium" :src="image" mode="" style="height: 700rpx;width: 650rpx;margin-top: 20rpx;"></image>
 				
@@ -43,12 +47,16 @@
 <script setup>
 	import {ref,reactive,onMounted} from 'vue'
 	import {uploadStore} from '@/stores/upload.js'
-	
+	import {searchStore} from '@/stores/search.js'
+	const searchStoreTemp = searchStore()
+
 	const uploadStoreTemp = uploadStore()
 	
 	const image = ref('')
 	
-		
+	const user = reactive({
+		name:''
+	})
 	onMounted(()=>{
 		uni.showLoading({
 			title:'图片加载中',
@@ -57,12 +65,11 @@
 		setTimeout(function () {
 			uni.hideLoading();
 		}, 2000);
+		user.name = searchStoreTemp.searchInfo.user_name
 		image.value = uploadStoreTemp.uploadImage
 	})
 	
-	const user = reactive({
-		name:'病患1231'
-	})
+
 	
 	function handleNextStep(){
 		uni.navigateTo({

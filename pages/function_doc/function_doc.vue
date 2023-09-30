@@ -14,10 +14,15 @@
 </template>
 
 <script setup>
-	import {ref , reactive} from 'vue'
-	
+	import {ref , reactive,onMounted} from 'vue'
+	import {searchStore} from '@/stores/search.js'
+	const searchStoreTemp = searchStore()
 	const user = reactive({
-		name:'张远'
+		name:''
+	})
+	
+	onMounted(()=>{
+		user.name = searchStoreTemp.searchInfo.user_name
 	})
 	
 	function handleClick(url){

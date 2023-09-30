@@ -1,10 +1,15 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+const stores_search = require("../../stores/search.js");
 const _sfc_main = {
   __name: "function",
   setup(__props) {
+    const searchStoreTemp = stores_search.searchStore();
+    common_vendor.onMounted(() => {
+      user.name = searchStoreTemp.searchInfo.user_name;
+    });
     const user = common_vendor.reactive({
-      name: "病患1231"
+      name: ""
     });
     function handleClick(url) {
       common_vendor.index.navigateTo({

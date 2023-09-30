@@ -1,6 +1,7 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
 const stores_upload = require("../../stores/upload.js");
+const stores_search = require("../../stores/search.js");
 if (!Array) {
   const _easycom_uni_icons2 = common_vendor.resolveComponent("uni-icons");
   _easycom_uni_icons2();
@@ -13,9 +14,13 @@ const _sfc_main = {
   __name: "detection_doc",
   setup(__props) {
     const uploadStoreTemp = stores_upload.uploadStore();
+    const searchStoreTemp = stores_search.searchStore();
     const upload = common_vendor.ref(false);
     const user = common_vendor.reactive({
-      name: "张远"
+      name: ""
+    });
+    common_vendor.onMounted(() => {
+      user.name = searchStoreTemp.searchInfo.user_name;
     });
     function handleUpload() {
       common_vendor.index.chooseImage({
@@ -41,6 +46,19 @@ const _sfc_main = {
           duration: 2e3
         });
       } else {
+        common_vendor.index.uploadFile({
+          url: "http://43.139.26.201:25800/v1/storage",
+          filePath: uploadStoreTemp.uploadImageDoc[0],
+          name: "pain_data",
+          formData: {
+            "patient_id": 123456
+          },
+          success: (res) => {
+            console.log(JSON.parse(res.data).data.path);
+            searchStoreTemp.setPaindatapath(JSON.parse(res.data).data.path);
+          }
+        });
+        console.log(uploadStoreTemp.uploadImageDoc[0]);
         common_vendor.index.navigateTo({
           url: "/pages/edit_info/edit_info"
         });

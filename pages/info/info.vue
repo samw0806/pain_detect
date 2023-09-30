@@ -25,16 +25,19 @@
 </template>
 
 <script setup>
-	import {ref,reactive} from 'vue'
+	import {ref,reactive,onMounted} from 'vue'
 	import {searchStore} from '@/stores/search.js'
 	
+
+	
 	const searchStoreTemp = searchStore()
+
 	const form = ref(null)
 	const styles = reactive({
 		borderColor:'black'
 	})
 	const validRules = {
-		name:{
+		user_name:{
 			rules:[
 				{
 					required:true,
@@ -43,18 +46,6 @@
 				{
 					pattern: /^[\u4e00-\u9fa5]+$/,
 					errorMessage:'姓名必须为中文'
-				}
-			]
-		},
-		sex:{
-			rules:[
-				{
-					required:true,
-					errorMessage:'此为必填项'
-				},
-				{
-					pattern: /^男|女$/,
-					errorMessage:'性别必须为男或女'
 				}
 			]
 		},
@@ -70,46 +61,56 @@
 				},
 			]
 		},
-		doc:{
+		doctor_id:{
 			rules:[
 				{
 					required:true,
 					errorMessage:'此为必填项'
 				},
 				{
-					pattern: /^[\u4e00-\u9fa5]+$/,
-					errorMessage:'医生姓名必须为中文'
+					format:'number',
+					errorMessage:'医生姓名必须为数字'
 				}
 			]
 		},
-		hos:{
+		hospital_id:{
 			rules:[
 				{
 					required:true,
 					errorMessage:'此为必填项'
 				},
 				{
-					pattern: /^[\u4e00-\u9fa5]+$/,
-					errorMessage:'医院必须为中文'
+					format:'number',
+					errorMessage:'医院ID必须为数字'
 				}
 			]
 		},
 	}
 	
 	const list = reactive([
-		{title:'姓名',text:'请输入姓名',name:'name'},
-		{title:'性别',text:'请输入性别',name:'sex'},
+		{title:'姓名',text:'请输入姓名',name:'user_name'},
 		{title:'年龄',text:'请输入年龄',name:'age'},
-		{title:'看诊医师',text:'请输入看诊医师',name:'doc'},
-		{title:'就诊医院',text:'请输入就诊医院',name:'hos'},
+		{title:'看诊医师ID',text:'请输入看诊医师ID',name:'doctor_id'},
+		{title:'就诊医院ID',text:'请输入就诊医院ID',name:'hospital_id'},
+		{title:'微信ID(测试用)',text:'请输入测试微信ID',name:'wechat_id'},
 	])
 	
 	const inputValues = reactive({
-		name:'',
-		sex:'',
-		age:'',
-		doc:'',
-		hos:'',
+	  "user_name": "",
+	  "hospital_id": null,
+	  "user_type": "",
+	  "wechat_id": "",
+	  "doctor_id": null,
+	  "age": null
+	})
+	
+	onMounted(()=>{
+		inputValues.user_name = searchStoreTemp.searchInfo.user_name
+		inputValues.hospital_id = searchStoreTemp.searchInfo.hospital_id
+		inputValues.user_type = searchStoreTemp.searchInfo.user_type
+		inputValues.wechat_id = searchStoreTemp.searchInfo.wechat_id
+		inputValues.doctor_id = searchStoreTemp.searchInfo.doctor_id
+		inputValues.age = searchStoreTemp.searchInfo.age
 	})
 	
 	
@@ -118,9 +119,28 @@
 	}
 	
 	function handleClick(){
-		form.value.validate().then(res=>{
-				console.log('表单数据信息：', res);
-				searchStoreTemp.setSearchInfo(res)
+		form.value.validate().then(async (r)=>{
+				console.log('表单数据信息：', r);
+				console.log('待传输数据信息：', inputValues);
+				if(searchStoreTemp.login === false){
+					const { data: res } = await uni.$http.post('/v1/user',inputValues)
+					console.log(res);
+					searchStoreTemp.setLogin(true)
+					if(res.code === "10000101"){
+						console.log(1111);
+						uni.showToast({
+							title:res.msg,
+							icon:'error',
+							duration:2000
+						})
+					}
+				}
+				else{
+					const { data: res } = await uni.$http.put('/v1/user',inputValues)
+					console.log(res);
+				}
+				searchStoreTemp.setSearchInfo(inputValues)
+
 				uni.navigateTo({
 					url: '/pages/function/function'
 				})

@@ -42,6 +42,9 @@
 
 <script setup>
 	import { ref } from 'vue'  
+	import {searchStore} from '@/stores/search.js'
+	
+	const searchStoreTemp = searchStore()
 	const state = ref(false)
 	
 	function checkboxChange(e){
@@ -62,6 +65,12 @@
 			})
 		}
 		else{
+			if(url == '/pages/info/info'){
+				searchStoreTemp.setSearchUsertype("patient")
+			}
+			else{
+				searchStoreTemp.setSearchUsertype("doctor")
+			}
 			uni.navigateTo({
 			    url: url
 			});

@@ -44,7 +44,7 @@ import { $http } from '@escook/request-miniprogram'
 //从网络请求包中引入$http请求对象
 uni.$http = $http
 //配置请求根路径
-$http.baseUrl = ''
+$http.baseUrl = 'http://43.139.26.201:25800'
 
 //请求拦截器
 $http.beforeRequest = function(options) {

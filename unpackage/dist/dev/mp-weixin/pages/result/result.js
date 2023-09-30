@@ -1,6 +1,7 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
 const stores_upload = require("../../stores/upload.js");
+const stores_search = require("../../stores/search.js");
 if (!Array) {
   const _easycom_uni_icons2 = common_vendor.resolveComponent("uni-icons");
   _easycom_uni_icons2();
@@ -12,8 +13,12 @@ if (!Math) {
 const _sfc_main = {
   __name: "result",
   setup(__props) {
+    const searchStoreTemp = stores_search.searchStore();
     const uploadStoreTemp = stores_upload.uploadStore();
     const image = common_vendor.ref("");
+    const user = common_vendor.reactive({
+      name: ""
+    });
     common_vendor.onMounted(() => {
       common_vendor.index.showLoading({
         title: "图片加载中",
@@ -22,10 +27,8 @@ const _sfc_main = {
       setTimeout(function() {
         common_vendor.index.hideLoading();
       }, 2e3);
+      user.name = searchStoreTemp.searchInfo.user_name;
       image.value = uploadStoreTemp.uploadImage;
-    });
-    const user = common_vendor.reactive({
-      name: "病患1231"
     });
     function handleNextStep() {
       common_vendor.index.navigateTo({

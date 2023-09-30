@@ -20,18 +20,19 @@
 				</view>
 				
 				<view class="medium" style="font-size: 50rpx;border-bottom: #52D4A2 8rpx solid;margin-top: 150rpx;">
-					{{vas_number}}
+					{{info.pain_level_custom}}
 				</view>
 				
 				
-				<slider style="-webkit-appearance:slider-vertical;" @change="handleSlider" :value="vas_number" max= "10" activeColor="#52D4A2"/>
-
+				<slider style="-webkit-appearance:slider-vertical;" @change="handleSlider" :value="info.pain_level_custom" max= "10" activeColor="#52D4A2"/>
+				
+				
 				
 				<button @click="handleNextStep" size="default" type="default"
 					style="color:#ffffff;backgroundColor:#52D4A2;margin-top: 440rpx;width: 600rpx;margin-left: 53rpx;font-size: 35rpx;;" 
 					hover-class="is-hover">提交报告<uni-icons type="compose" size="15" color="white" style="margin-left: 15rpx;"></uni-icons></button>
 				
-			
+				
 		</view>
 		
 	</view>
@@ -40,30 +41,40 @@
 <script setup>
 	import {ref,reactive,onMounted} from 'vue'
 	import {uploadStore} from '@/stores/upload.js'
+	import {searchStore} from '@/stores/search.js'
 	
 	const uploadStoreTemp = uploadStore()
-	
+	const searchStoreTemp = searchStore()
 	const image = ref('')
-	const vas_number = ref(5)
-	
-	
-		
-	onMounted(()=>{
 
-	})
 	
 	const user = reactive({
-		name:'病患1231'
+		name:''
+	})
+		
+	onMounted(()=>{
+		user.name = searchStoreTemp.searchInfo.user_name
+		info.pain_data_path = searchStoreTemp.pain_data_path
 	})
 	
-	function handleNextStep(){
+	const info = reactive({
+	  "patient_id": 666,
+	  "pain_level_custom": 5,
+	  "pain_data_path": "string"
+	})
+
+	
+	async function handleNextStep(){
+		console.log(info);
+		const { data: res } = await uni.$http.post('/v1/pain',info)
+		console.log(res);
 		uni.navigateTo({
 			url:'/pages/vas/vas'
 		})
 	}
 	
 	function handleSlider(e){
-		vas_number.value = e.detail.value
+		info.pain_level_custom = e.detail.value
 	}
 </script>
 

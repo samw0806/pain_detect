@@ -26,12 +26,15 @@
 
 <script setup>
 	import {ref,reactive} from 'vue'
+	import {searchStore} from '@/stores/search.js'
+		
+	const searchStoreTemp = searchStore()
 	const form = ref(null)
 	const styles = reactive({
 		borderColor:'black'
 	})
 	const validRules = {
-		name:{
+		user_name:{
 			rules:[
 				{
 					required:true,
@@ -43,31 +46,31 @@
 				}
 			]
 		},
-		sex:{
+		age:{
 			rules:[
 				{
 					required:true,
 					errorMessage:'此为必填项'
 				},
 				{
-					pattern: /^男|女$/,
-					errorMessage:'性别必须为男或女'
+					format:'number',
+					errorMessage:'年龄必须为数字'
 				}
 			]
 		},
-		hos:{
+		hospital_id:{
 			rules:[
 				{
 					required:true,
 					errorMessage:'此为必填项'
 				},
 				{
-					pattern: /^[\u4e00-\u9fa5]+$/,
-					errorMessage:'医院必须为中文'
+					format:'number',
+					errorMessage:'医院id必须为数字'
 				}
 			]
 		},
-		key:{
+		doctor_id:{
 			rules:[
 				{
 					required:true,
@@ -82,17 +85,20 @@
 	}
 	
 	const list = reactive([
-		{title:'姓名',text:'请输入姓名',name:'name'},
-		{title:'性别',text:'请输入性别',name:'sex'},
-		{title:'医院',text:'请输入医院',name:'hos'},
-		{title:'秘钥',text:'请输入秘钥',name:'key'},
+		{title:'姓名',text:'请输入姓名',name:'user_name'},
+		{title:'年龄',text:'请输入年龄',name:'age'},
+		{title:'医院ID',text:'请输入医院ID',name:'hospital_id'},
+		{title:'秘钥',text:'请输入秘钥',name:'doctor_id'},
+		{title:'微信ID(测试用)',text:'请输入微信ID',name:'wechat_id'},
 	])
 	
 	const inputValues = reactive({
-		name:'',
-		sex:'',
-		key:'',
-		hos:'',
+	  "user_name": "张",
+	  "hospital_id": 3,
+	  "user_type": "doctor",
+	  "wechat_id": "46",
+	  "doctor_id": 4,
+	  "age": 45
 	})
 	
 	
@@ -101,13 +107,32 @@
 	}
 	
 	function handleClick(){
-		form.value.validate().then(res=>{
-				console.log('表单数据信息：', res);
+		form.value.validate().then(async (r)=>{
+				console.log('表单数据信息：', r);
+				console.log('待传输数据信息：', inputValues);
+				if(searchStoreTemp.login === false){
+					const { data: res } = await uni.$http.post('/v1/user',inputValues)
+					console.log(res);
+					searchStoreTemp.setLogin(true)
+					if(res.code === "10000101"){
+						console.log(1111);
+						uni.showToast({
+							title:res.msg,
+							icon:'error',
+							duration:2000
+						})
+					}
+				}
+				else{
+					const { data: res } = await uni.$http.put('/v1/user',inputValues)
+					console.log(res);
+				}
+				searchStoreTemp.setSearchInfo(inputValues)
 				uni.navigateTo({
 					url: '/pages/function_doc/function_doc'
 				})
 			}).catch(err =>{
-				console.log('表单错误信息：', err);
+				console.log('表单错误：', err);
 			})
 
 		// const dataToSend = { ...inputValues } // 复制pageData对象，避免直接修改原对象

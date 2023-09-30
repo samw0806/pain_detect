@@ -3,7 +3,11 @@ const common_vendor = require("../common/vendor.js");
 const searchStore = common_vendor.defineStore("searchStoreTemp", {
   state() {
     return {
-      searchInfo: {}
+      searchInfo: {
+        user_type: ""
+      },
+      login: false,
+      pain_data_path: ""
     };
   },
   unistorage: true,
@@ -11,6 +15,15 @@ const searchStore = common_vendor.defineStore("searchStoreTemp", {
   actions: {
     setSearchInfo(searchInfo) {
       this.searchInfo = searchInfo;
+    },
+    setLogin(login) {
+      this.login = login;
+    },
+    setSearchUsertype(user_type) {
+      this.searchInfo.user_type = user_type;
+    },
+    setPaindatapath(pain_data_path) {
+      this.pain_data_path = pain_data_path;
     }
   }
 });

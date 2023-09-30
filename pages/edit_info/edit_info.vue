@@ -101,27 +101,24 @@
 	}
 	
 	const list = reactive([
-		{title:'姓名',text:'请输入姓名',name:'name'},
-		{title:'性别',text:'请输入性别',name:'sex'},
+		{title:'姓名',text:'请输入姓名',name:'user_name'},
 		{title:'年龄',text:'请输入年龄',name:'age'},
-		{title:'看诊医师',text:'请输入看诊医师',name:'doc'},
-		{title:'就诊医院',text:'请输入就诊医院',name:'hos'},
+		{title:'看诊医师ID',text:'请输入看诊医师ID',name:'doctor_id'},
+		{title:'就诊医院ID',text:'请输入就诊医院ID',name:'hospital_id'},
+		{title:'微信ID(测试用)',text:'请输入测试微信ID',name:'wechat_id'},
 	])
 	
 	const inputValues = reactive({
-		name:'',
-		sex:'',
-		age:'',
-		doc:'',
-		hos:'',
+	  "user_name": "",
+	  "hospital_id": null,
+	  "user_type": "",
+	  "wechat_id": "",
+	  "doctor_id": null,
+	  "age": null
 	})
 	
 	onMounted(()=>{
-		inputValues.name = searchStoreTemp.searchInfo.name
-		inputValues.age = searchStoreTemp.searchInfo.age
-		inputValues.sex = searchStoreTemp.searchInfo.sex
-		inputValues.doc = searchStoreTemp.searchInfo.doc
-		inputValues.hos = searchStoreTemp.searchInfo.hos
+
 	})
 	
 	function handleVas(){
@@ -131,8 +128,11 @@
 	}
 	
 	function handleClick(){
-		form.value.validate().then(res=>{
-				console.log('表单数据信息：', res);
+		form.value.validate().then(async(re)=>{
+				console.log('表单数据信息：', re);
+				console.log('待传输数据信息：', inputValues);
+				const { data: res } = await uni.$http.post('/v1/user',inputValues)
+				console.log(res);
 				uni.navigateTo({
 					url: '/pages/function/function'
 				})

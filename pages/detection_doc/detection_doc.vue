@@ -48,15 +48,20 @@
 </template>
 
 <script setup>
-	import {ref,reactive} from 'vue'
+	import {ref,reactive,onMounted} from 'vue'
 	import {uploadStore} from '@/stores/upload.js'
 	
 	const uploadStoreTemp = uploadStore()
-	
+	import {searchStore} from '@/stores/search.js'
+	const searchStoreTemp = searchStore()
 	const upload = ref(false)
 	
 	const user = reactive({
-		name:'张远'
+		name:''
+	})
+	
+	onMounted(()=>{
+		user.name = searchStoreTemp.searchInfo.user_name
 	})
 	
 	function handleUpload(){
@@ -97,6 +102,19 @@
 			})
 		}
 		else{
+			uni.uploadFile({
+				url: 'http://43.139.26.201:25800/v1/storage',
+				filePath:uploadStoreTemp.uploadImageDoc[0],
+				name:'pain_data',
+				formData:{
+					'patient_id':123456
+				},
+				success:(res)=>{
+					console.log(JSON.parse(res.data).data.path);
+					searchStoreTemp.setPaindatapath(JSON.parse(res.data).data.path)		
+				}
+			})
+			console.log(uploadStoreTemp.uploadImageDoc[0]);
 			uni.navigateTo({
 			    url: '/pages/edit_info/edit_info'
 			});

@@ -1,6 +1,7 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
 const stores_upload = require("../../stores/upload.js");
+const stores_search = require("../../stores/search.js");
 if (!Array) {
   const _easycom_uni_icons2 = common_vendor.resolveComponent("uni-icons");
   _easycom_uni_icons2();
@@ -13,27 +14,37 @@ const _sfc_main = {
   __name: "vas",
   setup(__props) {
     stores_upload.uploadStore();
+    const searchStoreTemp = stores_search.searchStore();
     common_vendor.ref("");
-    const vas_number = common_vendor.ref(5);
-    common_vendor.onMounted(() => {
-    });
     const user = common_vendor.reactive({
-      name: "病患1231"
+      name: ""
     });
-    function handleNextStep() {
+    common_vendor.onMounted(() => {
+      user.name = searchStoreTemp.searchInfo.user_name;
+      info.pain_data_path = searchStoreTemp.pain_data_path;
+    });
+    const info = common_vendor.reactive({
+      "patient_id": 666,
+      "pain_level_custom": 5,
+      "pain_data_path": "string"
+    });
+    async function handleNextStep() {
+      console.log(info);
+      const { data: res } = await common_vendor.index.$http.post("/v1/pain", info);
+      console.log(res);
       common_vendor.index.navigateTo({
         url: "/pages/vas/vas"
       });
     }
     function handleSlider(e) {
-      vas_number.value = e.detail.value;
+      info.pain_level_custom = e.detail.value;
     }
     return (_ctx, _cache) => {
       return {
         a: common_vendor.t(user.name),
-        b: common_vendor.t(vas_number.value),
+        b: common_vendor.t(info.pain_level_custom),
         c: common_vendor.o(handleSlider),
-        d: vas_number.value,
+        d: info.pain_level_custom,
         e: common_vendor.p({
           type: "compose",
           size: "15",

@@ -32,7 +32,7 @@ const _sfc_main = {
 };
 const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/uni_app playground/pain_detect/App.vue"]]);
 common_vendor.index.$http = common_vendor.$http;
-common_vendor.$http.baseUrl = "";
+common_vendor.$http.baseUrl = "http://43.139.26.201:25800";
 common_vendor.$http.beforeRequest = function(options) {
   common_vendor.index.showLoading({
     title: "数据加载中..."

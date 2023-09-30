@@ -48,15 +48,21 @@
 </template>
 
 <script setup>
-	import {ref,reactive} from 'vue'
+	import {ref,reactive,onMounted} from 'vue'
 	import {uploadStore} from '@/stores/upload.js'
-	
+
+	import {searchStore} from '@/stores/search.js'
 	const uploadStoreTemp = uploadStore()
 	
 	const upload = ref(false)
+		
+	const searchStoreTemp = searchStore()
+	onMounted(()=>{
+		user.name = searchStoreTemp.searchInfo.user_name
+	})
 	
 	const user = reactive({
-		name:'病患1231'
+		name:''
 	})
 	
 	function handleUpload(){
@@ -66,7 +72,8 @@
 		    sourceType: ['album'], //这要注意，camera掉拍照，album是打开手机相册
 		    success: (res)=> {
 				uploadStoreTemp.setUploadImage(res.tempFilePaths) 
-				upload.value = true				
+				upload.value = true		
+
 		    }
 		});
 	}
@@ -93,6 +100,25 @@
 			})
 		}
 		else{
+			// const formData = new FormData();
+			// formData.append('pain_data',res.tempFilePaths)
+			// formData.append('patient_id',123456)
+			// const { data: r } = await uni.$http.post('/v1/storage',formData)
+			// console.log(r);
+			
+			uni.uploadFile({
+				url: 'http://43.139.26.201:25800/v1/storage',
+				filePath:uploadStoreTemp.uploadImage[0],
+				name:'pain_data',
+				formData:{
+					'patient_id':123456
+				},
+				success:(res)=>{
+					console.log(JSON.parse(res.data).data.path);
+					searchStoreTemp.setPaindatapath(JSON.parse(res.data).data.path)		
+				}
+			})
+			console.log(uploadStoreTemp.uploadImage[0]);
 			uni.navigateTo({
 			    url: '/pages/result/result'
 			});
