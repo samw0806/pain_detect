@@ -14,7 +14,8 @@
     "pages/communicate_doc/communicate_doc",
     "pages/search/search",
     "pages/chart/chart",
-    "pages/edit_info/edit_info"
+    "pages/edit_info/edit_info",
+    "pages/update_info/update_info"
   ],
   "window": {
     "navigationBarTextStyle": "black",

@@ -7,7 +7,7 @@
 		<view>
 			<image @click="handleClick('/pages/search/search')" src="../../static/fun1.jpg" mode=""></image>
 			<image @click="handleClick('/pages/communicate_doc/communicate_doc')" src="../../static/fun2.jpg" mode=""></image>
-			<image @click="handleClick('/pages/doc_info/doc_info')" src="../../static/fun3.jpg" mode=""></image>
+			<image @click="handleClick('/pages/update_info/update_info')" src="../../static/fun3.jpg" mode=""></image>
 		</view>
 	</view>
 
@@ -23,6 +23,7 @@
 	
 	onMounted(()=>{
 		user.name = searchStoreTemp.searchInfo.user_name
+		searchStoreTemp.setLogin(true)
 	})
 	
 	function handleClick(url){

@@ -7,7 +7,7 @@
 		<view>
 			<image @click="handleClick('/pages/detection/detection')" src="../../static/function1.jpg" mode=""></image>
 			<image @click="handleClick('/pages/communicate/communicate')" src="../../static/function2.jpg" mode=""></image>
-			<image @click="handleClick('/pages/info/info')" src="../../static/function3.jpg" mode=""></image>
+			<image @click="handleClick('/pages/update_info/update_info')" src="../../static/function3.jpg" mode=""></image>
 		</view>
 	</view>
 
@@ -20,6 +20,7 @@
 	const searchStoreTemp = searchStore()
 	onMounted(()=>{
 		user.name = searchStoreTemp.searchInfo.user_name
+        searchStoreTemp.setLogin(true)
 	})
 	
 	const user = reactive({

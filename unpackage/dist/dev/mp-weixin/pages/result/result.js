@@ -29,6 +29,7 @@ const _sfc_main = {
       }, 2e3);
       user.name = searchStoreTemp.searchInfo.user_name;
       image.value = uploadStoreTemp.uploadImage;
+      console.log(image.value);
     });
     function handleBack() {
       common_vendor.index.navigateBack();

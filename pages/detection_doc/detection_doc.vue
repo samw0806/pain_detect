@@ -15,7 +15,7 @@
 				请上传您的正脸照
 			</view>
 			<view class="" style="margin: 50rpx auto;">
-				<image @click="handleUpload" src="../../static/upload.jpg" mode="" style="height: 550rpx;width: 570rpx;"></image>
+				<image @click="handleUpload" :src="img" mode="" style="height: 550rpx;width: 570rpx;"></image>
 			</view>
 			<view class="buttom" style="margin: auto;">
 				<view @click="handleUpload" class="" style="display: inline-block; margin-right: 80rpx;">
@@ -50,18 +50,21 @@
 <script setup>
 	import {ref,reactive,onMounted} from 'vue'
 	import {uploadStore} from '@/stores/upload.js'
-	
-	const uploadStoreTemp = uploadStore()
+	import {selectStore} from '@/stores/select.js'
 	import {searchStore} from '@/stores/search.js'
-	const searchStoreTemp = searchStore()
+	const uploadStoreTemp = uploadStore()
+	const selectStoreTemp = selectStore()
 	const upload = ref(false)
+	
+	const img = ref('../../static/upload.jpg')
+		
+	const searchStoreTemp = searchStore()
+	onMounted(()=>{
+		user.name = searchStoreTemp.searchInfo.user_name
+	})
 	
 	const user = reactive({
 		name:''
-	})
-	
-	onMounted(()=>{
-		user.name = searchStoreTemp.searchInfo.user_name
 	})
 	
 	function handleUpload(){
@@ -69,14 +72,19 @@
 		  	count: 1,
 		    sizeType: ['original', 'compressed'],
 		    sourceType: ['album'], //这要注意，camera掉拍照，album是打开手机相册
-		    success: (res)=> {
-				console.log(res);
-				uploadStoreTemp.setUploadImageDoc(res.tempFilePaths) 
-				upload.value = true				
-		    },
-			fail: (err)=> {
-				console.log(err);
-			}
+		    success: async (res)=> {
+				uni.showToast({
+					title:'上传中...',
+					icon:'loading',
+					duration:2000
+				})
+				img.value = '../../static/right.jpg'
+				uploadStoreTemp.setUploadImage(res.tempFilePaths) 
+				// const { data: res } = await uni.$http.post(`http://43.139.26.201:25800/v1/storage`)
+				// console.log(res);
+				upload.value = true		
+
+		    }
 		});
 	}
 	
@@ -102,21 +110,29 @@
 			})
 		}
 		else{
+			// const formData = new FormData();
+			// formData.append('pain_data',res.tempFilePaths)
+			// formData.append('patient_id',123456)
+			// const { data: r } = await uni.$http.post('/v1/storage',formData)
+			// console.log(r);
+			
 			uni.uploadFile({
 				url: 'http://43.139.26.201:25800/v1/storage',
-				filePath:uploadStoreTemp.uploadImageDoc[0],
+				filePath:uploadStoreTemp.uploadImage[0],
 				name:'pain_data',
 				formData:{
-					'patient_id':123456
+					'patient_id':selectStoreTemp.selectData.id
 				},
 				success:(res)=>{
+					console.log(`被上传的用户信息${selectStoreTemp.selectData}`);
 					console.log(JSON.parse(res.data).data.path);
 					searchStoreTemp.setPaindatapath(JSON.parse(res.data).data.path)		
+					console.log(res.data);
 				}
 			})
-			console.log(uploadStoreTemp.uploadImageDoc[0]);
+			console.log(uploadStoreTemp.uploadImage[0]);
 			uni.navigateTo({
-			    url: '/pages/edit_info/edit_info'
+			    url: '/pages/result/result'
 			});
 		}
 	}

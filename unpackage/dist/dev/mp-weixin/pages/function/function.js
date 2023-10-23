@@ -7,6 +7,7 @@ const _sfc_main = {
     const searchStoreTemp = stores_search.searchStore();
     common_vendor.onMounted(() => {
       user.name = searchStoreTemp.searchInfo.user_name;
+      searchStoreTemp.setLogin(true);
     });
     const user = common_vendor.reactive({
       name: ""
@@ -21,7 +22,7 @@ const _sfc_main = {
         a: common_vendor.t(user.name),
         b: common_vendor.o(($event) => handleClick("/pages/detection/detection")),
         c: common_vendor.o(($event) => handleClick("/pages/communicate/communicate")),
-        d: common_vendor.o(($event) => handleClick("/pages/info/info"))
+        d: common_vendor.o(($event) => handleClick("/pages/update_info/update_info"))
       };
     };
   }

@@ -16,7 +16,7 @@ if (!Math) {
 }
 const fuzzysearch = () => "../../components/fuzzy_search.js";
 const _sfc_main = {
-  __name: "info",
+  __name: "update_info",
   setup(__props) {
     const searchStoreTemp = stores_search.searchStore();
     const hospitalName = common_vendor.ref("");
@@ -28,13 +28,14 @@ const _sfc_main = {
     const show_doc = common_vendor.ref(false);
     const selectData = common_vendor.ref(null);
     const focus = common_vendor.ref("");
+    const show_d = common_vendor.ref(true);
     common_vendor.ref("");
     const queryParams = common_vendor.reactive({
       pageSize: 10,
       pageNum: 1,
       list: []
     });
-    common_vendor.reactive({
+    const queryParams_doc = common_vendor.reactive({
       pageSize: 10,
       pageNum: 1,
       list: []
@@ -42,6 +43,7 @@ const _sfc_main = {
     const hospitalList = common_vendor.ref([]);
     const doctorList = common_vendor.ref([]);
     common_vendor.watch(() => hospitalName.value, (newVal) => {
+      console.log("watch");
       if (selectClick.value === true) {
         selectClick.value = false;
       } else {
@@ -50,6 +52,7 @@ const _sfc_main = {
       }
     });
     common_vendor.watch(() => doctorName.value, (newVal) => {
+      console.log("watch");
       if (selectClick.value === true) {
         selectClick.value = false;
       } else {
@@ -111,22 +114,18 @@ const _sfc_main = {
       "hospital_id": "",
       "user_type": "patient",
       "doctor_id": "",
-      "age": null,
-      "code": ""
+      "age": null
     });
     common_vendor.onMounted(async () => {
-      common_vendor.index.login({
-        provider: "weixin",
-        //使用微信登录
-        onlyAuthorize: true,
-        success: async function(loginRes2) {
-          console.log(`创建用户的code:${loginRes2.code}`);
-          inputValues.code = loginRes2.code;
-        },
-        fail() {
-          console.log(loginRes.authResult);
-        }
-      });
+      if (searchStoreTemp.searchInfo.user_type === "patient") {
+        inputValues.doctor_id = searchStoreTemp.searchInfo.doctor_id;
+        const { data: res } = await common_vendor.index.$http.get(`/v1/user/doctor?hospital_id=${searchStoreTemp.searchInfo.hospital_id}`);
+        queryParams_doc.list = res.data;
+        doctorList.value = res.data;
+      } else {
+        inputValues.doctor_id = searchStoreTemp.searchInfo.id;
+        show_d.value = false;
+      }
       const { data: re } = await common_vendor.index.$http.get("/v1/hospital");
       if (re.code === "0") {
         hospitalList.value = re.data;
@@ -137,9 +136,20 @@ const _sfc_main = {
           duration: 1e3
         });
       }
+      inputValues.user_name = searchStoreTemp.searchInfo.user_name;
+      inputValues.hospital_id = searchStoreTemp.searchInfo.hospital_id;
+      inputValues.user_type = searchStoreTemp.searchInfo.user_type;
+      inputValues.age = searchStoreTemp.searchInfo.age;
+      inputValues.id = searchStoreTemp.searchInfo.id;
+      hospitalName.value = searchStoreTemp.searchInfo.hospital_name;
+      doctorName.value = searchStoreTemp.searchInfo.doctor_name;
     });
     function scrolltolower() {
       queryParams.pageNum++;
+      getList();
+    }
+    function scrolltolower_doc() {
+      queryParams_doc.pageNum++;
       getList();
     }
     function getList() {
@@ -157,11 +167,13 @@ const _sfc_main = {
           show.value = false;
         }
       } else {
-        if (doctorName.value) {
-          httpGetList({ ...queryParams, keyword: doctorName.value }).then((resp) => {
+        if (doctorName.value && focus.value === "doc") {
+          httpGetList({ ...queryParams_doc, keyword: doctorName.value }).then((resp) => {
             if (resp.code === 200) {
+              console.log("qp");
+              console.log(queryParams_doc.list);
               console.log(resp.data);
-              queryParams.list = resp.data;
+              queryParams_doc.list = resp.data;
               if (!show_doc.value)
                 show_doc.value = true;
             }
@@ -238,13 +250,19 @@ const _sfc_main = {
     }
     function handleClick() {
       form.value.validate().then(async (r) => {
-        const { data: res } = await common_vendor.index.$http.post("/v1/user", inputValues);
+        const { data: res } = await common_vendor.index.$http.put("/v1/user", inputValues);
         console.log(res);
         console.log("待传输数据信息：", inputValues);
         searchStoreTemp.setSearchInfo(inputValues);
-        common_vendor.index.navigateTo({
-          url: "/pages/function/function"
-        });
+        if (searchStoreTemp.searchInfo.user_type === "patient") {
+          common_vendor.index.navigateTo({
+            url: "/pages/function/function"
+          });
+        } else {
+          common_vendor.index.navigateTo({
+            url: "/pages/function_doc/function_doc"
+          });
+        }
       }).catch((err) => {
         console.log("表单错误：", err);
       });
@@ -256,7 +274,7 @@ const _sfc_main = {
             a: common_vendor.t(item.title),
             b: common_vendor.o(_ctx.handleFocus, index),
             c: common_vendor.o(_ctx.input, index),
-            d: "5dbb4556-2-" + i0 + "," + ("5dbb4556-1-" + i0),
+            d: "0c9207e0-2-" + i0 + "," + ("0c9207e0-1-" + i0),
             e: common_vendor.o(($event) => inputValues[item.name] = $event, index),
             f: common_vendor.p({
               focus: true,
@@ -265,14 +283,14 @@ const _sfc_main = {
               placeholderStyle: _ctx.placeholderStyle,
               modelValue: inputValues[item.name]
             }),
-            g: "5dbb4556-1-" + i0 + ",5dbb4556-0",
+            g: "0c9207e0-1-" + i0 + ",0c9207e0-0",
             h: common_vendor.p({
               name: item.name
             }),
             i: index
           };
         }),
-        b: common_vendor.sr(form, "5dbb4556-0", {
+        b: common_vendor.sr(form, "0c9207e0-0", {
           "k": "form"
         }),
         c: common_vendor.p({
@@ -306,7 +324,7 @@ const _sfc_main = {
           placeholder: "请输入医生名称",
           modelValue: doctorName.value
         }),
-        m: common_vendor.o(scrolltolower),
+        m: common_vendor.o(scrolltolower_doc),
         n: common_vendor.o(select),
         o: common_vendor.p({
           ["label-name"]: "name",
@@ -314,15 +332,16 @@ const _sfc_main = {
           align: "center",
           ["no-data"]: "无相关记录",
           show: show_doc.value,
-          list: queryParams.list,
+          list: queryParams_doc.list,
           ["custom-style"]: {
             fontSize: "30rpx"
           }
         }),
-        p: common_vendor.o(handleClick)
+        p: show_d.value,
+        q: common_vendor.o(handleClick)
       };
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/uni_app playground/pain_detect/pages/info/info.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/uni_app playground/pain_detect/pages/update_info/update_info.vue"]]);
 wx.createPage(MiniProgramPage);

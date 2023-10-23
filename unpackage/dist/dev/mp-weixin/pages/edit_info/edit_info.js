@@ -1,6 +1,7 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
 const stores_search = require("../../stores/search.js");
+const stores_select = require("../../stores/select.js");
 if (!Array) {
   const _easycom_uni_easyinput2 = common_vendor.resolveComponent("uni-easyinput");
   const _easycom_uni_forms_item2 = common_vendor.resolveComponent("uni-forms-item");
@@ -16,36 +17,25 @@ if (!Math) {
 const _sfc_main = {
   __name: "edit_info",
   setup(__props) {
-    stores_search.searchStore();
+    const selectStoreTemp = stores_select.selectStore();
+    const searchStoreTemp = stores_search.searchStore();
     const form = common_vendor.ref(null);
     const styles = common_vendor.reactive({
       borderColor: "black"
     });
     const validRules = {
-      name: {
-        rules: [
-          {
-            required: true,
-            errorMessage: "此为必填项"
-          },
-          {
-            pattern: /^[\u4e00-\u9fa5]+$/,
-            errorMessage: "姓名必须为中文"
-          }
-        ]
-      },
-      sex: {
-        rules: [
-          {
-            required: true,
-            errorMessage: "此为必填项"
-          },
-          {
-            pattern: /^男|女$/,
-            errorMessage: "性别必须为男或女"
-          }
-        ]
-      },
+      // user_name:{
+      // 	rules:[
+      // 		{
+      // 			required:true,
+      // 			errorMessage:'此为必填项'
+      // 		},
+      // 		{
+      // 			pattern: /^[\u4e00-\u9fa5]+$/,
+      // 			errorMessage:'姓名必须为中文'
+      // 		}
+      // 	]
+      // },
       age: {
         rules: [
           {
@@ -57,65 +47,70 @@ const _sfc_main = {
             errorMessage: "年龄必须为数字"
           }
         ]
-      },
-      doc: {
-        rules: [
-          {
-            required: true,
-            errorMessage: "此为必填项"
-          },
-          {
-            pattern: /^[\u4e00-\u9fa5]+$/,
-            errorMessage: "医生姓名必须为中文"
-          }
-        ]
-      },
-      hos: {
-        rules: [
-          {
-            required: true,
-            errorMessage: "此为必填项"
-          },
-          {
-            pattern: /^[\u4e00-\u9fa5]+$/,
-            errorMessage: "医院必须为中文"
-          }
-        ]
       }
+      // hospital_id:{
+      // 	rules:[
+      // 		{
+      // 			required:true,
+      // 			errorMessage:'此为必填项'
+      // 		},
+      // 		{
+      // 			format:'number',
+      // 			errorMessage:'医院id必须为数字'
+      // 		}
+      // 	]
+      // },
     };
     const list = common_vendor.reactive([
-      { title: "姓名", text: "请输入姓名", name: "user_name" },
-      { title: "年龄", text: "请输入年龄", name: "age" },
-      { title: "看诊医师ID", text: "请输入看诊医师ID", name: "doctor_id" },
-      { title: "就诊医院ID", text: "请输入就诊医院ID", name: "hospital_id" },
-      { title: "微信ID(测试用)", text: "请输入测试微信ID", name: "wechat_id" }
+      { title: "姓名", text: "请输入病患姓名", name: "user_name" },
+      { title: "年龄", text: "请输入病患年龄", name: "age" }
     ]);
     const inputValues = common_vendor.reactive({
       "user_name": "",
-      "hospital_id": null,
-      "user_type": "",
-      "wechat_id": "",
-      "doctor_id": null,
-      "age": null
+      "hospital_id": "",
+      "user_type": "patient",
+      "doctor_id": "",
+      "age": null,
+      "code": ""
     });
     common_vendor.onMounted(() => {
+      inputValues.doctor_id = searchStoreTemp.searchInfo.id;
+      inputValues.hospital_id = searchStoreTemp.searchInfo.hospital_id;
+      if (selectStoreTemp.selectData.user_name && selectStoreTemp.selectData.age) {
+        inputValues.user_name = selectStoreTemp.selectData.user_name;
+        inputValues.age = selectStoreTemp.selectData.age;
+      }
+      common_vendor.index.login({
+        provider: "weixin",
+        //使用微信登录
+        onlyAuthorize: true,
+        success: async function(loginRes2) {
+          console.log(`创建用户的code:${loginRes2.code}`);
+          inputValues.code = loginRes2.code;
+        },
+        fail() {
+          console.log(loginRes.authResult);
+        }
+      });
     });
+    function handleFocus() {
+    }
+    function handleClick() {
+      form.value.validate().then(async (r) => {
+        const { data: res } = await common_vendor.index.$http.post("/v1/user", inputValues);
+        console.log(res);
+        selectStoreTemp.setSelectData(inputValues);
+        console.log("待传输数据信息：", selectStoreTemp.selectData);
+        common_vendor.index.navigateTo({
+          url: "/pages/detection_doc/detection_doc"
+        });
+      }).catch((err) => {
+        console.log("表单错误：", err);
+      });
+    }
     function handleVas() {
       common_vendor.index.navigateTo({
         url: "/pages/chart/chart"
-      });
-    }
-    function handleClick() {
-      form.value.validate().then(async (re) => {
-        console.log("表单数据信息：", re);
-        console.log("待传输数据信息：", inputValues);
-        const { data: res } = await common_vendor.index.$http.post("/v1/user", inputValues);
-        console.log(res);
-        common_vendor.index.navigateTo({
-          url: "/pages/function/function"
-        });
-      }).catch((err) => {
-        console.log("表单错误信息：", err);
       });
     }
     return (_ctx, _cache) => {
@@ -123,7 +118,7 @@ const _sfc_main = {
         a: common_vendor.f(list, (item, index, i0) => {
           return {
             a: common_vendor.t(item.title),
-            b: common_vendor.o(_ctx.handleFocus, index),
+            b: common_vendor.o(handleFocus, index),
             c: common_vendor.o(_ctx.input, index),
             d: "6fe914c4-2-" + i0 + "," + ("6fe914c4-1-" + i0),
             e: common_vendor.o(($event) => inputValues[item.name] = $event, index),

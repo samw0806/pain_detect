@@ -22,18 +22,18 @@ const _sfc_main = {
       borderColor: "black"
     });
     const validRules = {
-      user_name: {
-        rules: [
-          {
-            required: true,
-            errorMessage: "此为必填项"
-          },
-          {
-            pattern: /^[\u4e00-\u9fa5]+$/,
-            errorMessage: "姓名必须为中文"
-          }
-        ]
-      },
+      // user_name:{
+      // 	rules:[
+      // 		{
+      // 			required:true,
+      // 			errorMessage:'此为必填项'
+      // 		},
+      // 		{
+      // 			pattern: /^[\u4e00-\u9fa5]+$/,
+      // 			errorMessage:'姓名必须为中文'
+      // 		}
+      // 	]
+      // },
       age: {
         rules: [
           {
@@ -45,70 +45,56 @@ const _sfc_main = {
             errorMessage: "年龄必须为数字"
           }
         ]
-      },
-      hospital_id: {
-        rules: [
-          {
-            required: true,
-            errorMessage: "此为必填项"
-          },
-          {
-            format: "number",
-            errorMessage: "医院id必须为数字"
-          }
-        ]
-      },
-      doctor_id: {
-        rules: [
-          {
-            required: true,
-            errorMessage: "此为必填项"
-          },
-          {
-            format: "number",
-            errorMessage: "秘钥必须为中文"
-          }
-        ]
       }
+      // hospital_id:{
+      // 	rules:[
+      // 		{
+      // 			required:true,
+      // 			errorMessage:'此为必填项'
+      // 		},
+      // 		{
+      // 			format:'number',
+      // 			errorMessage:'医院id必须为数字'
+      // 		}
+      // 	]
+      // },
     };
     const list = common_vendor.reactive([
       { title: "姓名", text: "请输入姓名", name: "user_name" },
       { title: "年龄", text: "请输入年龄", name: "age" },
       { title: "医院ID", text: "请输入医院ID", name: "hospital_id" },
-      { title: "秘钥", text: "请输入秘钥", name: "doctor_id" },
-      { title: "微信ID(测试用)", text: "请输入微信ID", name: "wechat_id" }
+      { title: "秘钥", text: "请输入秘钥", name: "doctor_id" }
     ]);
     const inputValues = common_vendor.reactive({
-      "user_name": "张",
-      "hospital_id": 3,
+      "user_name": "",
+      "hospital_id": "",
       "user_type": "doctor",
-      "wechat_id": "46",
-      "doctor_id": 4,
-      "age": 45
+      "doctor_id": "",
+      "age": null,
+      "code": ""
+    });
+    common_vendor.onMounted(() => {
+      common_vendor.index.login({
+        provider: "weixin",
+        //使用微信登录
+        onlyAuthorize: true,
+        success: async function(loginRes2) {
+          console.log(`创建用户的code:${loginRes2.code}`);
+          inputValues.code = loginRes2.code;
+        },
+        fail() {
+          console.log(loginRes.authResult);
+        }
+      });
     });
     function handleFocus() {
     }
     function handleClick() {
       form.value.validate().then(async (r) => {
-        console.log("表单数据信息：", r);
+        const { data: res } = await common_vendor.index.$http.post("/v1/user", inputValues);
+        console.log(res);
         console.log("待传输数据信息：", inputValues);
-        if (searchStoreTemp.login === false) {
-          const { data: res } = await common_vendor.index.$http.post("/v1/user", inputValues);
-          console.log(res);
-          searchStoreTemp.setLogin(true);
-          if (res.code === "10000101") {
-            console.log(1111);
-            common_vendor.index.showToast({
-              title: res.msg,
-              icon: "error",
-              duration: 2e3
-            });
-          }
-        } else {
-          const { data: res } = await common_vendor.index.$http.put("/v1/user", inputValues);
-          console.log(res);
-        }
-        searchStoreTemp.setSearchInfo(inputValues);
+        searchStoreTemp.searchInfo(inputValues);
         common_vendor.index.navigateTo({
           url: "/pages/function_doc/function_doc"
         });

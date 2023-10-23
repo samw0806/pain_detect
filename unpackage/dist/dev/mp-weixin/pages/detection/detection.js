@@ -29,7 +29,7 @@ const _sfc_main = {
         sizeType: ["original", "compressed"],
         sourceType: ["album"],
         //这要注意，camera掉拍照，album是打开手机相册
-        success: (res) => {
+        success: async (res) => {
           common_vendor.index.showToast({
             title: "上传中...",
             icon: "loading",
@@ -54,11 +54,12 @@ const _sfc_main = {
           filePath: uploadStoreTemp.uploadImage[0],
           name: "pain_data",
           formData: {
-            "patient_id": 123456
+            "patient_id": searchStoreTemp.searchInfo.id
           },
           success: (res) => {
             console.log(JSON.parse(res.data).data.path);
             searchStoreTemp.setPaindatapath(JSON.parse(res.data).data.path);
+            console.log(res.data);
           }
         });
         console.log(uploadStoreTemp.uploadImage[0]);

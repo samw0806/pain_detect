@@ -13,8 +13,10 @@
   font-size: 35rpx;
 }
 .button {
-  margin-left: 27rpx;
-  margin-top: 50rpx;
+  position: fixed;
+  bottom: 20rpx;
+  left: 50%;
+  transform: translateX(-50%);
   width: 700rpx;
   height: 200rpx;
 }

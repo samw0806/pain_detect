@@ -22,6 +22,7 @@ const _sfc_main = {
     common_vendor.onMounted(() => {
       user.name = searchStoreTemp.searchInfo.user_name;
       info.pain_data_path = searchStoreTemp.pain_data_path;
+      info.patient_id = searchStoreTemp.searchInfo.id;
     });
     const info = common_vendor.reactive({
       "patient_id": 666,
@@ -32,9 +33,22 @@ const _sfc_main = {
       console.log(info);
       const { data: res } = await common_vendor.index.$http.post("/v1/pain", info);
       console.log(res);
-      common_vendor.index.navigateTo({
-        url: "/pages/vas/vas"
+      common_vendor.index.showToast({
+        title: "上传成功",
+        icon: "success",
+        duration: 1500
       });
+      setTimeout(() => {
+        if (searchStoreTemp.searchInfo.user_type === "patient") {
+          common_vendor.index.navigateTo({
+            url: "/pages/function/function"
+          });
+        } else {
+          common_vendor.index.navigateTo({
+            url: "/pages/function_doc/function_doc"
+          });
+        }
+      }, 1500);
     }
     function handleSlider(e) {
       info.pain_level_custom = e.detail.value;

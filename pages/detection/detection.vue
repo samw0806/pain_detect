@@ -72,7 +72,7 @@
 		  	count: 1,
 		    sizeType: ['original', 'compressed'],
 		    sourceType: ['album'], //这要注意，camera掉拍照，album是打开手机相册
-		    success: (res)=> {
+		    success: async (res)=> {
 				uni.showToast({
 					title:'上传中...',
 					icon:'loading',
@@ -80,6 +80,8 @@
 				})
 				img.value = '../../static/right.jpg'
 				uploadStoreTemp.setUploadImage(res.tempFilePaths) 
+				// const { data: res } = await uni.$http.post(`http://43.139.26.201:25800/v1/storage`)
+				// console.log(res);
 				upload.value = true		
 
 		    }
@@ -119,11 +121,12 @@
 				filePath:uploadStoreTemp.uploadImage[0],
 				name:'pain_data',
 				formData:{
-					'patient_id':123456
+					'patient_id':searchStoreTemp.searchInfo.id
 				},
 				success:(res)=>{
 					console.log(JSON.parse(res.data).data.path);
 					searchStoreTemp.setPaindatapath(JSON.parse(res.data).data.path)		
+					console.log(res.data);
 				}
 			})
 			console.log(uploadStoreTemp.uploadImage[0]);

@@ -55,6 +55,7 @@
 	onMounted(()=>{
 		user.name = searchStoreTemp.searchInfo.user_name
 		info.pain_data_path = searchStoreTemp.pain_data_path
+		info.patient_id = searchStoreTemp.searchInfo.id
 	})
 	
 	const info = reactive({
@@ -68,9 +69,24 @@
 		console.log(info);
 		const { data: res } = await uni.$http.post('/v1/pain',info)
 		console.log(res);
-		uni.navigateTo({
-			url:'/pages/vas/vas'
+		uni.showToast({
+			title:"上传成功",
+			icon:'success',
+			duration:1500
 		})
+		setTimeout(()=>{
+			if(searchStoreTemp.searchInfo.user_type === "patient"){
+				uni.navigateTo({
+					url:'/pages/function/function'
+				})
+			}
+			else{
+				uni.navigateTo({
+					url:'/pages/function_doc/function_doc'
+				})
+			}
+		},1500)
+
 	}
 	
 	function handleSlider(e){

@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-	import {ref,reactive} from 'vue'
+	import {ref,reactive,onMounted} from 'vue'
 	import {searchStore} from '@/stores/search.js'
 		
 	const searchStoreTemp = searchStore()
@@ -34,18 +34,18 @@
 		borderColor:'black'
 	})
 	const validRules = {
-		user_name:{
-			rules:[
-				{
-					required:true,
-					errorMessage:'此为必填项'
-				},
-				{
-					pattern: /^[\u4e00-\u9fa5]+$/,
-					errorMessage:'姓名必须为中文'
-				}
-			]
-		},
+		// user_name:{
+		// 	rules:[
+		// 		{
+		// 			required:true,
+		// 			errorMessage:'此为必填项'
+		// 		},
+		// 		{
+		// 			pattern: /^[\u4e00-\u9fa5]+$/,
+		// 			errorMessage:'姓名必须为中文'
+		// 		}
+		// 	]
+		// },
 		age:{
 			rules:[
 				{
@@ -58,30 +58,18 @@
 				}
 			]
 		},
-		hospital_id:{
-			rules:[
-				{
-					required:true,
-					errorMessage:'此为必填项'
-				},
-				{
-					format:'number',
-					errorMessage:'医院id必须为数字'
-				}
-			]
-		},
-		doctor_id:{
-			rules:[
-				{
-					required:true,
-					errorMessage:'此为必填项'
-				},
-				{
-					format:'number',
-					errorMessage:'秘钥必须为中文'
-				}
-			]
-		},
+		// hospital_id:{
+		// 	rules:[
+		// 		{
+		// 			required:true,
+		// 			errorMessage:'此为必填项'
+		// 		},
+		// 		{
+		// 			format:'number',
+		// 			errorMessage:'医院id必须为数字'
+		// 		}
+		// 	]
+		// },
 	}
 	
 	const list = reactive([
@@ -89,18 +77,31 @@
 		{title:'年龄',text:'请输入年龄',name:'age'},
 		{title:'医院ID',text:'请输入医院ID',name:'hospital_id'},
 		{title:'秘钥',text:'请输入秘钥',name:'doctor_id'},
-		{title:'微信ID(测试用)',text:'请输入微信ID',name:'wechat_id'},
 	])
 	
+	
 	const inputValues = reactive({
-	  "user_name": "张",
-	  "hospital_id": 3,
+	  "user_name": "",
+	  "hospital_id": "",
 	  "user_type": "doctor",
-	  "wechat_id": "46",
-	  "doctor_id": 4,
-	  "age": 45
+	  "doctor_id": "",
+	  "age": null,
+	  "code":""
 	})
 	
+	onMounted(()=>{
+		uni.login({
+		  provider: 'weixin', //使用微信登录
+		  onlyAuthorize:true,
+		  success: async function (loginRes) {
+		    console.log(`创建用户的code:${loginRes.code}`);
+			inputValues.code = loginRes.code
+		  },
+		  fail() {
+		  	console.log(loginRes.authResult);
+		  }
+		});
+	})
 	
 	function handleFocus(){
 		
@@ -108,29 +109,34 @@
 	
 	function handleClick(){
 		form.value.validate().then(async (r)=>{
-				console.log('表单数据信息：', r);
+				const { data: res } = await uni.$http.post('/v1/user',inputValues)
+				console.log(res);
 				console.log('待传输数据信息：', inputValues);
-				if(searchStoreTemp.login === false){
-					const { data: res } = await uni.$http.post('/v1/user',inputValues)
-					console.log(res);
-					searchStoreTemp.setLogin(true)
-					if(res.code === "10000101"){
-						console.log(1111);
-						uni.showToast({
-							title:res.msg,
-							icon:'error',
-							duration:2000
-						})
-					}
-				}
-				else{
-					const { data: res } = await uni.$http.put('/v1/user',inputValues)
-					console.log(res);
-				}
-				searchStoreTemp.setSearchInfo(inputValues)
+				searchStoreTemp.searchInfo(inputValues)
 				uni.navigateTo({
 					url: '/pages/function_doc/function_doc'
-				})
+				})	
+				
+				// 	if(res.code === "10000101"){
+				// 		console.log(1111);
+				// 		uni.showToast({
+				// 			title:res.msg,
+				// 			icon:'error',
+				// 			duration:2000
+				// 		})
+				// 	}
+				// uni.login({
+				//   provider: 'weixin', //使用微信登录
+				//   onlyAuthorize:true,
+				//   success: async function (loginResr) {
+				//     console.log(`创建用户的code:${loginResr.code}`);
+				// 	searchStoreTemp.setSearchInfo(loginResr.code)
+				//   },
+				//   fail() {
+				//   	console.log(loginResr.authResult);
+				//   }
+				// });
+
 			}).catch(err =>{
 				console.log('表单错误：', err);
 			})

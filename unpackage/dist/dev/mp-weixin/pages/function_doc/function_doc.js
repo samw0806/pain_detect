@@ -10,6 +10,7 @@ const _sfc_main = {
     });
     common_vendor.onMounted(() => {
       user.name = searchStoreTemp.searchInfo.user_name;
+      searchStoreTemp.setLogin(true);
     });
     function handleClick(url) {
       common_vendor.index.navigateTo({
@@ -21,7 +22,7 @@ const _sfc_main = {
         a: common_vendor.t(user.name),
         b: common_vendor.o(($event) => handleClick("/pages/search/search")),
         c: common_vendor.o(($event) => handleClick("/pages/communicate_doc/communicate_doc")),
-        d: common_vendor.o(($event) => handleClick("/pages/doc_info/doc_info"))
+        d: common_vendor.o(($event) => handleClick("/pages/update_info/update_info"))
       };
     };
   }

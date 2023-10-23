@@ -134,6 +134,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/update_info/update_info",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

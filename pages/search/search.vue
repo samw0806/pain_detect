@@ -31,12 +31,17 @@
 <script setup>
 	import fuzzysearch from '@/components/fuzzy_search.vue'
 	import debounce from '@/common/js/debounce.js'; //防抖函数
-	import { httpGetList } from '@/common/js/api.js';
-	import { reactive , ref , watch } from "vue";
+	// import { httpGetList } from '@/common/js/api.js';
+	import { reactive , ref , watch , onMounted } from "vue";
 	import {searchStore} from '@/stores/search.js'
-import { uploadStore } from '../../stores/upload';
+	import { uploadStore } from '../../stores/upload';
+	import {selectStore} from '../../stores/select.js'
 	
+	const selectStoreTemp = selectStore()
 	const searchStoreTemp = searchStore()
+	
+	//生成随机数--模糊搜索模块
+	const getRandomNumber = () => Math.random().toString(16).slice(2);
 	
 	const inputStyles = {
 		borderColor:"black",
@@ -49,15 +54,29 @@ import { uploadStore } from '../../stores/upload';
 		pageNum:1,
 		list:[]
 	})
+	const universityList = ref([])
 	
 	watch(() => value.value, (newVal)=>{
 		queryParams.pageNum = 1
 		debounce(getList(),500)
 	})
 	
+	onMounted(async()=>{
+		//测试用
+		const { data: res } = await uni.$http.get(`/v1/user/patient?doctor_id=${searchStoreTemp.searchInfo.doctor_id}`)
+		//实际
+		// const { data: res } = await uni.$http.get(`/v1/user/patient?doctor_id=${searchStoreTemp.searchInfo.id}`)
+		universityList.value = res.data
+		console.log(11);
+		console.log(res.data);
+	})
+	
 	function handleNext(){
+		if(Object.keys(selectStoreTemp.selectData).length !== 0){
+			selectStoreTemp.setSelectData({})
+		}
 		uni.navigateTo({
-			url:'/pages/detection_doc/detection_doc'
+			url:'/pages/edit_info/edit_info'
 		})
 	}
 	
@@ -90,26 +109,56 @@ import { uploadStore } from '../../stores/upload';
 	function select(event) {
 			show.value = false;
 			value.value = event.name;
-			selectData.value = JSON.stringify(event);
+			selectData.value = JSON.stringify(event.name);
+
 		}
 	
 	async function iconClick(){
-		const{data:res} = await uni.$http.post('/search',value.value)
-		if(red.code == 200){
+		// selectStoreTemp.setSelectData(universityList.value.find(obj => obj.name === value.value))
+		// console.log("选择的数据");
+		// console.log(selectStoreTemp.selectData);
+		const{data:res} = await uni.$http.get(`/v1/user?user_id=${universityList.value.find(obj => obj.name === value.value).id}`)
+		if(res.code == 0){
 			console.log('请求成功');
-			searchStoreTemp.setSearchInfo(res.data)
+			selectStoreTemp.setSelectData(res.data)
 			uni.navigateTo({
-				url:'/pages/detection_doc/detection_doc'
+				url:'/pages/edit_info/edit_info'
 			})
-			console.log(searchStoreTemp.searchInfo);
+			console.log(selectStoreTemp.selectData);
 		}
 		else{
+			console.log(res);
 			uni.showToast({
 				title:'请检查网络',
 				icon:'error',
 				duration:2000
 			})
 		}
+	}
+	
+	function httpGetList(params) {
+		const {
+			pageNum,
+			pageSize,
+			keyword
+		} = params
+		return new Promise((resovle) => {
+			let data = []
+			let uList = universityList.value
+			for (let i = 0; i < pageNum; i++) {
+				let list = universityList.value.map(item => ({
+					name: item.name,
+					id: getRandomNumber()
+				}))
+				data = [...data, ...list]
+			}
+			data = data.filter(item => item.name.includes(keyword))
+			resovle({
+				code: 200,
+				msg: 'success',
+				data
+			})
+		})
 	}
 	
 	

@@ -17,6 +17,7 @@ if (!Math) {
   "./pages/search/search.js";
   "./pages/chart/chart.js";
   "./pages/edit_info/edit_info.js";
+  "./pages/update_info/update_info.js";
 }
 const _sfc_main = {
   onLaunch: function() {

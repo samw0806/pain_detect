@@ -67,6 +67,7 @@
 		}, 2000);
 		user.name = searchStoreTemp.searchInfo.user_name
 		image.value = uploadStoreTemp.uploadImage
+		console.log(image.value);
 	})
 	
 	function handleBack(){
