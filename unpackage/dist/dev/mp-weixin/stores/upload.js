@@ -4,7 +4,8 @@ const uploadStore = common_vendor.defineStore("uploadStoreTemp", {
   state() {
     return {
       uploadImage: "",
-      uploadImageDoc: ""
+      uploadImageDoc: "",
+      uploadType: ""
     };
   },
   unistorage: true,
@@ -15,6 +16,9 @@ const uploadStore = common_vendor.defineStore("uploadStoreTemp", {
     },
     setUploadImageDoc(uploadImageDoc) {
       this.uploadImageDoc = uploadImageDoc;
+    },
+    setUploaduploadType(uploadType) {
+      this.uploadType = uploadType;
     }
   }
 });

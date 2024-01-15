@@ -18,7 +18,7 @@ const fuzzysearch = () => "../../components/fuzzy_search.js";
 const _sfc_main = {
   __name: "info",
   setup(__props) {
-    const searchStoreTemp = stores_search.searchStore();
+    stores_search.searchStore();
     const hospitalName = common_vendor.ref("");
     const doctorName = common_vendor.ref("");
     const inputStyles = {
@@ -57,6 +57,7 @@ const _sfc_main = {
         common_js_debounce.debounce(getList(), 500);
       }
     });
+    const id = common_vendor.ref("12342553");
     const selectClick = common_vendor.ref(false);
     const form = common_vendor.ref(null);
     const styles = common_vendor.reactive({
@@ -112,31 +113,10 @@ const _sfc_main = {
       "user_type": "patient",
       "doctor_id": "",
       "age": null,
-      "code": ""
+      "code": "",
+      "pw": ""
     });
     common_vendor.onMounted(async () => {
-      common_vendor.index.login({
-        provider: "weixin",
-        //使用微信登录
-        onlyAuthorize: true,
-        success: async function(loginRes2) {
-          console.log(`创建用户的code:${loginRes2.code}`);
-          inputValues.code = loginRes2.code;
-        },
-        fail() {
-          console.log(loginRes.authResult);
-        }
-      });
-      const { data: re } = await common_vendor.index.$http.get("/v1/hospital");
-      if (re.code === "0") {
-        hospitalList.value = re.data;
-      } else {
-        common_vendor.index.showToast({
-          title: "发生错误",
-          icon: "error",
-          duration: 1e3
-        });
-      }
     });
     function scrolltolower() {
       queryParams.pageNum++;
@@ -238,12 +218,22 @@ const _sfc_main = {
     }
     function handleClick() {
       form.value.validate().then(async (r) => {
-        const { data: res } = await common_vendor.index.$http.post("/v1/user", inputValues);
-        console.log(res);
-        console.log("待传输数据信息：", inputValues);
-        searchStoreTemp.setSearchInfo(inputValues);
-        common_vendor.index.navigateTo({
-          url: "/pages/function/function"
+        common_vendor.index.showModal({
+          title: "请务必记录好您的ID",
+          content: id.value,
+          confirmText: "复制ID",
+          success: function(res) {
+            if (res.confirm) {
+              common_vendor.index.setClipboardData({
+                data: id.value
+              });
+              common_vendor.index.navigateTo({
+                url: "/pages/function/function"
+              });
+            } else {
+              console.log("点击了取消");
+            }
+          }
         });
       }).catch((err) => {
         console.log("表单错误：", err);
@@ -272,23 +262,37 @@ const _sfc_main = {
             i: index
           };
         }),
-        b: common_vendor.sr(form, "5dbb4556-0", {
+        b: common_vendor.t("密码"),
+        c: common_vendor.o(_ctx.handleFocus),
+        d: common_vendor.o(_ctx.input),
+        e: common_vendor.o(($event) => inputValues["pw"] = $event),
+        f: common_vendor.p({
+          focus: true,
+          placeholder: "请输入密码",
+          styles,
+          placeholderStyle: _ctx.placeholderStyle,
+          modelValue: inputValues["pw"]
+        }),
+        g: common_vendor.p({
+          name: "pw"
+        }),
+        h: common_vendor.sr(form, "5dbb4556-0", {
           "k": "form"
         }),
-        c: common_vendor.p({
+        i: common_vendor.p({
           rules: validRules,
           modelValue: inputValues
         }),
-        d: common_vendor.o(($event) => focus.value = "hos"),
-        e: common_vendor.o(($event) => hospitalName.value = $event),
-        f: common_vendor.p({
+        j: common_vendor.o(($event) => focus.value = "hos"),
+        k: common_vendor.o(($event) => hospitalName.value = $event),
+        l: common_vendor.p({
           styles: inputStyles,
           placeholder: "请输入医院名称",
           modelValue: hospitalName.value
         }),
-        g: common_vendor.o(scrolltolower),
-        h: common_vendor.o(select),
-        i: common_vendor.p({
+        m: common_vendor.o(scrolltolower),
+        n: common_vendor.o(select),
+        o: common_vendor.p({
           ["label-name"]: "name",
           ["value-name"]: "id",
           align: "center",
@@ -299,16 +303,16 @@ const _sfc_main = {
             fontSize: "30rpx"
           }
         }),
-        j: common_vendor.o(($event) => focus.value = "doc"),
-        k: common_vendor.o(($event) => doctorName.value = $event),
-        l: common_vendor.p({
+        p: common_vendor.o(($event) => focus.value = "doc"),
+        q: common_vendor.o(($event) => doctorName.value = $event),
+        r: common_vendor.p({
           styles: inputStyles,
           placeholder: "请输入医生名称",
           modelValue: doctorName.value
         }),
-        m: common_vendor.o(scrolltolower),
-        n: common_vendor.o(select),
-        o: common_vendor.p({
+        s: common_vendor.o(scrolltolower),
+        t: common_vendor.o(select),
+        v: common_vendor.p({
           ["label-name"]: "name",
           ["value-name"]: "id",
           align: "center",
@@ -319,7 +323,7 @@ const _sfc_main = {
             fontSize: "30rpx"
           }
         }),
-        p: common_vendor.o(handleClick)
+        w: common_vendor.o(handleClick)
       };
     };
   }

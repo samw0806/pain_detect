@@ -1,74 +1,37 @@
 <template>
 	<view class="title">
-		请输入您的个人资料
+		登录疼痛系统
 	</view>
 	
 	<uni-forms :rules="validRules" :modelValue="inputValues" ref="form">
-		<view class="main" v-for="(item,index) in list" :key="index">
-			<view class="form-group">
-				<uni-forms-item :name="item.name">
-					<text>{{item.title}}</text>
+
+			<view class="form-group" style="margin-top: 300rpx;">
+				<uni-forms-item :name="'id'">
+					<text>{{'ID'}}</text>
 					<view class="" style="margin-top: 30rpx;">
-						<uni-easyinput  @focus="handleFocus" v-model="inputValues[item.name]" focus :placeholder="item.text" @input="input" :styles="styles" :placeholderStyle="placeholderStyle"/>
+						<uni-easyinput  @focus="handleFocus" v-model="inputValues['id']" focus :placeholder="'请输入ID'" @input="input" :styles="styles" :placeholderStyle="placeholderStyle"/>
+					</view>
+				</uni-forms-item>
+				<uni-forms-item :name="'pw'">
+					<text>{{'密码'}}</text>
+					<view class="" style="margin-top: 30rpx;">
+						<uni-easyinput type="password"  @focus="handleFocus" v-model="inputValues['pw']" focus :placeholder="'请输入密码'" @input="input" :styles="styles" :placeholderStyle="placeholderStyle"/>
 					</view>
 				</uni-forms-item>
 			</view>
-		</view>
-		<view class="form-group">
-			<uni-forms-item :name="'pw'">
-				<text>{{'密码'}}</text>
-				<view class="" style="margin-top: 30rpx;">
-					<uni-easyinput  @focus="handleFocus" v-model="inputValues['pw']" focus :placeholder="'请输入密码'" @input="input" :styles="styles" :placeholderStyle="placeholderStyle"/>
-				</view>
-			</uni-forms-item>
-		</view>
+
 	</uni-forms>
 	
-	<view class="form-group">
-	    <text>医院名称</text>
-		<view class="content">
-
-			<view class="" style="margin-top: 30rpx;">
-				<uni-easyinput :styles="inputStyles" style="" v-model="hospitalName" placeholder="请输入医院名称" @focus="focus='hos'"></uni-easyinput>
-			</view>		
-			<fuzzysearch
-				label-name="name"
-				value-name="id"
-				align="center"
-				no-data="无相关记录"
-				:show="show"
-				:list="queryParams.list"
-				:custom-style="{ fontSize: '30rpx' }"
-				@scrolltolower="scrolltolower"
-				@select="select"
-			></fuzzysearch>
-		</view>
-	</view>
-	
-	<view class="form-group">
-		<text>医生名称</text>
-		<view class="content">
-			<view class="" style="margin-top: 30rpx;">
-				<uni-easyinput :styles="inputStyles" style="" v-model="doctorName" placeholder="请输入医生名称" @focus="focus='doc'"></uni-easyinput>
-			</view>		
-			<fuzzysearch
-				label-name="name"
-				value-name="id"
-				align="center"
-				no-data="无相关记录"
-				:show="show_doc"
-				:list="queryParams.list"
-				:custom-style="{ fontSize: '30rpx' }"
-				@scrolltolower="scrolltolower"
-				@select="select"
-			></fuzzysearch>
-		</view>
+	<view style="margin-top: 50rpx;display: flex;justify-content: center;  ">
+			<view @click="handleRg" 
+			style="color:#52D4A2;font-weight: 300;" 
+			>点击此处注册</view>
 	</view>
 	
 	<view class="button">
 			<button @click="handleClick" size="default" type="default" 
 			style="color:#ffffff;backgroundColor:#52D4A2;" 
-			hover-class="is-hover">保存并获取ID</button>
+			hover-class="is-hover">登录</button>
 	</view>
 	
 </template>
@@ -129,7 +92,7 @@
 		}
 	})
 	
-	const id = ref('12342553')
+
 	
 	const selectClick = ref(false)
 	
@@ -137,61 +100,12 @@
 	const styles = reactive({
 		borderColor:'black'
 	})
-	const validRules = {
-		// user_name:{
-		// 	rules:[
-		// 		{
-		// 			required:true,
-		// 			errorMessage:'此为必填项'
-		// 		},
-		// 		{
-		// 			pattern: /^[\u4e00-\u9fa5]+$/,
-		// 			errorMessage:'姓名必须为中文'
-		// 		}
-		// 	]
-		// },
-		age:{
-			rules:[
-				{
-					required:true,
-					errorMessage:'此为必填项'
-				},
-				{
-					format:'number',
-					errorMessage:'年龄必须为数字'
-				}
-			]
-		},
-		// hospital_id:{
-		// 	rules:[
-		// 		{
-		// 			required:true,
-		// 			errorMessage:'此为必填项'
-		// 		},
-		// 		{
-		// 			format:'number',
-		// 			errorMessage:'医院id必须为数字'
-		// 		}
-		// 	]
-		// },
-	}
-	
-	const list = reactive([
-		{title:'姓名',text:'请输入姓名',name:'user_name'},
-		{title:'年龄',text:'请输入年龄',name:'age'},
-		// {title:'医院ID',text:'请输入就诊医院ID',name:'hospital_id'},
-		// {title:'医师ID',text:'请输入看诊医师ID',name:'doctor_id'},
-	])
+
 	
 	
 	const inputValues = reactive({
-	  "user_name": "",
-	  "hospital_id": "",
-	  "user_type": "patient",
-	  "doctor_id": "",
-	  "age": null,
-	  "code":"",
-	  "pw":""
+	  "id": "",
+	  "pw": "",
 	})
 	
 	onMounted(async()=>{
@@ -355,33 +269,22 @@
 		})
 	}
 	
+	function handleRg(){
+		uni.navigateTo({
+			url:'/pages/info/info'
+		})
+	}
+	
 	function handleClick(){
 		form.value.validate().then(async (r)=>{
-				// const { data: res } = await uni.$http.post('/v1/user',inputValues)
-				// console.log(res);
-				// console.log('待传输数据信息：', inputValues);
-				// searchStoreTemp.setSearchInfo(inputValues)
-				// // uni.navigateTo({
-				// // 	url: '/pages/function/function'
-				// // })	
-				uni.showModal({
-									title: '请务必记录好您的ID',
-									content: id.value,
-									confirmText:'复制ID',
-									success: function(res) {
-									if (res.confirm) {
-										uni.setClipboardData({
-											data: id.value
-										});
-										uni.navigateTo({
-											url: '/pages/function/function'
-										})	
-									} else {
-										console.log('点击了取消')
-									}
-								}
-							})
-
+				const { data: res } = await uni.$http.post('/v1/user',inputValues)
+				console.log(res);
+				console.log('待传输数据信息：', inputValues);
+				searchStoreTemp.setSearchInfo(inputValues)
+				uni.navigateTo({
+					url: '/pages/function/function'
+				})	
+				
 				// 	if(res.code === "10000101"){
 				// 		console.log(1111);
 				// 		uni.showToast({
@@ -450,4 +353,3 @@
 	 
 	 }
 </style>
-

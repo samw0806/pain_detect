@@ -93,22 +93,22 @@
 				//   }
 				// });
 				//仅供测试
-				searchStoreTemp.setSearchInfo({
-					"user_name": "patient B",
-					"hospital_id": "cf3fc395-6d58-402b-9487-1e828932a9f2",
-					"age": 50,
-					"user_type": "patient",
-					"doctor_id": "63d5e66a-0280-4923-9530-f331bf8eb065",
-					"id": "1a921bcb-7fce-49ba-8050-9ab0e85b6096",
-					"doctor_name": "doctor A",
-					"hospital_name": "new hospital"
-				})
-				uni.navigateTo({
-					url: '/pages/function/function'
-				});
-				// uni.navigateTo({
-				// 	url:'/pages/info/info'
+				// searchStoreTemp.setSearchInfo({
+				// 	"user_name": "patient B",
+				// 	"hospital_id": "cf3fc395-6d58-402b-9487-1e828932a9f2",
+				// 	"age": 50,
+				// 	"user_type": "patient",
+				// 	"doctor_id": "63d5e66a-0280-4923-9530-f331bf8eb065",
+				// 	"id": "1a921bcb-7fce-49ba-8050-9ab0e85b6096",
+				// 	"doctor_name": "doctor A",
+				// 	"hospital_name": "new hospital"
 				// })
+				// uni.navigateTo({
+				// 	url: '/pages/function/function'
+				// });
+				uni.navigateTo({
+					url:'/pages/lg_rg/lg_rg'
+				})
 			}
 			else{
 				uni.login({

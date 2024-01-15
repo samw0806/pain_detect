@@ -83,6 +83,7 @@
 	const list = reactive([
 		{title:'姓名',text:'请输入病患姓名',name:'user_name'},
 		{title:'年龄',text:'请输入病患年龄',name:'age'},
+		{title:'备注',text:'请输入病患备注',name:'ps'},
 	])
 	
 	
@@ -92,7 +93,8 @@
 	  "user_type": "patient",
 	  "doctor_id": "",
 	  "age": null,
-	  "code":""
+	  "code":"",
+	  "ps":"",
 	})
 	
 	onMounted(()=>{

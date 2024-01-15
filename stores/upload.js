@@ -5,7 +5,8 @@ export const uploadStore = defineStore('uploadStoreTemp', {
 	state(){
 		return { 
 			uploadImage: '',
-			uploadImageDoc:''
+			uploadImageDoc:'',
+			uploadType:''
 		};
 	},
 	unistorage: true, // 开启后对 state 的数据读写都将持久化
@@ -16,6 +17,8 @@ export const uploadStore = defineStore('uploadStoreTemp', {
 		setUploadImageDoc(uploadImageDoc){
 			this.uploadImageDoc = uploadImageDoc;
 		},
-
+		setUploaduploadType(uploadType){
+			this.uploadType = uploadType;
+		},
 	},
 });

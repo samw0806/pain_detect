@@ -68,24 +68,43 @@
 	})
 	
 	function handleUpload(){
-		uni.chooseImage({
-		  	count: 1,
-		    sizeType: ['original', 'compressed'],
-		    sourceType: ['album'], //这要注意，camera掉拍照，album是打开手机相册
+		// uni.chooseImage({
+		//   	count: 1,
+		//     sizeType: ['original', 'compressed'],
+		//     sourceType: ['album'], //这要注意，camera掉拍照，album是打开手机相册
+		//     success: async (res)=> {
+		// 		uni.showToast({
+		// 			title:'上传中...',
+		// 			icon:'loading',
+		// 			duration:2000
+		// 		})
+		// 		img.value = '../../static/right.jpg'
+		// 		uploadStoreTemp.setUploadImage(res.tempFilePaths) 
+		// 		// const { data: res } = await uni.$http.post(`http://43.139.26.201:25800/v1/storage`)
+		// 		// console.log(res);
+		// 		upload.value = true		
+
+		//     }
+		// });
+		uni.chooseMedia({
+		  count: 1,
+		  mediaType: ['image','video'],
+		  sourceType: ['album'],
+		  maxDuration: 30,
 		    success: async (res)=> {
+				console.log(res);
 				uni.showToast({
 					title:'上传中...',
 					icon:'loading',
 					duration:2000
 				})
 				img.value = '../../static/right.jpg'
-				uploadStoreTemp.setUploadImage(res.tempFilePaths) 
+				uploadStoreTemp.setUploadImage(res.tempFiles[0].tempFilePath) 
+				uploadStoreTemp.setUploaduploadType(res.type)
 				// const { data: res } = await uni.$http.post(`http://43.139.26.201:25800/v1/storage`)
 				// console.log(res);
-				upload.value = true		
-
-		    }
-		});
+				upload.value = true	}
+		})
 	}
 	
 	function handleCarmera(){
@@ -118,7 +137,7 @@
 			
 			uni.uploadFile({
 				url: 'http://43.139.26.201:25800/v1/storage',
-				filePath:uploadStoreTemp.uploadImage[0],
+				filePath:uploadStoreTemp.uploadImage,
 				name:'pain_data',
 				formData:{
 					'patient_id':searchStoreTemp.searchInfo.id

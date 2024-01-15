@@ -63,7 +63,8 @@ const _sfc_main = {
     };
     const list = common_vendor.reactive([
       { title: "姓名", text: "请输入病患姓名", name: "user_name" },
-      { title: "年龄", text: "请输入病患年龄", name: "age" }
+      { title: "年龄", text: "请输入病患年龄", name: "age" },
+      { title: "备注", text: "请输入病患备注", name: "ps" }
     ]);
     const inputValues = common_vendor.reactive({
       "user_name": "",
@@ -71,7 +72,8 @@ const _sfc_main = {
       "user_type": "patient",
       "doctor_id": "",
       "age": null,
-      "code": ""
+      "code": "",
+      "ps": ""
     });
     common_vendor.onMounted(() => {
       inputValues.doctor_id = searchStoreTemp.searchInfo.id;

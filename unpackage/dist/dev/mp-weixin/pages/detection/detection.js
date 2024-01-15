@@ -24,19 +24,21 @@ const _sfc_main = {
       name: ""
     });
     function handleUpload() {
-      common_vendor.index.chooseImage({
+      common_vendor.index.chooseMedia({
         count: 1,
-        sizeType: ["original", "compressed"],
+        mediaType: ["image", "video"],
         sourceType: ["album"],
-        //这要注意，camera掉拍照，album是打开手机相册
+        maxDuration: 30,
         success: async (res) => {
+          console.log(res);
           common_vendor.index.showToast({
             title: "上传中...",
             icon: "loading",
             duration: 2e3
           });
           img.value = "../../static/right.jpg";
-          uploadStoreTemp.setUploadImage(res.tempFilePaths);
+          uploadStoreTemp.setUploadImage(res.tempFiles[0].tempFilePath);
+          uploadStoreTemp.setUploaduploadType(res.type);
           upload.value = true;
         }
       });
@@ -51,7 +53,7 @@ const _sfc_main = {
       } else {
         common_vendor.index.uploadFile({
           url: "http://43.139.26.201:25800/v1/storage",
-          filePath: uploadStoreTemp.uploadImage[0],
+          filePath: uploadStoreTemp.uploadImage,
           name: "pain_data",
           formData: {
             "patient_id": searchStoreTemp.searchInfo.id

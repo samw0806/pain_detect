@@ -4,10 +4,10 @@
 		<view class="">
 			<text class="title_2">欢迎登录疼痛分级系统</text>
 		</view>
-		<view>
+		<view style="margin-top: 100rpx;">
 			<image @click="handleClick('/pages/detection/detection')" src="../../static/function1.jpg" mode=""></image>
 			<image @click="handleClick('/pages/communicate/communicate')" src="../../static/function2.jpg" mode=""></image>
-			<image @click="handleClick('/pages/update_info/update_info')" src="../../static/function3.jpg" mode=""></image>
+			<!-- <image @click="handleClick('/pages/update_info/update_info')" src="../../static/function3.jpg" mode=""></image> -->
 		</view>
 	</view>
 

@@ -15,7 +15,8 @@
     "pages/search/search",
     "pages/chart/chart",
     "pages/edit_info/edit_info",
-    "pages/update_info/update_info"
+    "pages/update_info/update_info",
+    "pages/lg_rg/lg_rg"
   ],
   "window": {
     "navigationBarTextStyle": "black",

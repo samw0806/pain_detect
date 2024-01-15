@@ -21,8 +21,7 @@ const _sfc_main = {
       return {
         a: common_vendor.t(user.name),
         b: common_vendor.o(($event) => handleClick("/pages/detection/detection")),
-        c: common_vendor.o(($event) => handleClick("/pages/communicate/communicate")),
-        d: common_vendor.o(($event) => handleClick("/pages/update_info/update_info"))
+        c: common_vendor.o(($event) => handleClick("/pages/communicate/communicate"))
       };
     };
   }

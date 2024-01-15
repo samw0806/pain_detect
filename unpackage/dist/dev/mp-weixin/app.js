@@ -18,6 +18,7 @@ if (!Math) {
   "./pages/chart/chart.js";
   "./pages/edit_info/edit_info.js";
   "./pages/update_info/update_info.js";
+  "./pages/lg_rg/lg_rg.js";
 }
 const _sfc_main = {
   onLaunch: function() {

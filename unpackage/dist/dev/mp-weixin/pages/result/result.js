@@ -15,7 +15,11 @@ const _sfc_main = {
   setup(__props) {
     const searchStoreTemp = stores_search.searchStore();
     const uploadStoreTemp = stores_upload.uploadStore();
+    const show = common_vendor.ref(true);
     const image = common_vendor.ref("");
+    const src = common_vendor.ref("");
+    const controls = common_vendor.ref(true);
+    const autoplay = common_vendor.ref(false);
     const user = common_vendor.reactive({
       name: ""
     });
@@ -28,8 +32,13 @@ const _sfc_main = {
         common_vendor.index.hideLoading();
       }, 2e3);
       user.name = searchStoreTemp.searchInfo.user_name;
-      image.value = uploadStoreTemp.uploadImage;
       console.log(image.value);
+      if (uploadStoreTemp.uploadType === "image") {
+        image.value = uploadStoreTemp.uploadImage;
+      } else {
+        src.value = uploadStoreTemp.uploadImage;
+        show.value = false;
+      }
     });
     function handleBack() {
       common_vendor.index.navigateBack();
@@ -40,23 +49,30 @@ const _sfc_main = {
       });
     }
     return (_ctx, _cache) => {
-      return {
+      return common_vendor.e({
         a: common_vendor.t(user.name),
-        b: image.value == "" ? true : false,
-        c: image.value,
-        d: common_vendor.p({
+        b: show.value
+      }, show.value ? {
+        c: image.value == "" ? true : false,
+        d: image.value
+      } : {
+        e: src.value,
+        f: controls.value,
+        g: autoplay.value
+      }, {
+        h: common_vendor.p({
           type: "refresh-filled",
           size: "20",
           color: "#339EE6"
         }),
-        e: common_vendor.o(handleBack),
-        f: common_vendor.p({
+        i: common_vendor.o(handleBack),
+        j: common_vendor.p({
           type: "forward",
           size: "15",
           color: "white"
         }),
-        g: common_vendor.o(handleNextStep)
-      };
+        k: common_vendor.o(handleNextStep)
+      });
     };
   }
 };

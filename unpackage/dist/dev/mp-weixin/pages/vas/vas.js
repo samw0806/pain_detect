@@ -16,6 +16,7 @@ const _sfc_main = {
     stores_upload.uploadStore();
     const searchStoreTemp = stores_search.searchStore();
     common_vendor.ref("");
+    const src = common_vendor.ref("");
     const user = common_vendor.reactive({
       name: ""
     });
@@ -32,23 +33,14 @@ const _sfc_main = {
     async function handleNextStep() {
       console.log(info);
       const { data: res } = await common_vendor.index.$http.post("/v1/pain", info);
-      console.log(res);
+      console.log(res.data.covert_image);
+      src.value = `data:image/png;base64,${res.data.convert_image}`;
+      src.value = src.value.replace(/[\r\n]/g, "");
       common_vendor.index.showToast({
         title: "上传成功",
         icon: "success",
         duration: 1500
       });
-      setTimeout(() => {
-        if (searchStoreTemp.searchInfo.user_type === "patient") {
-          common_vendor.index.navigateTo({
-            url: "/pages/function/function"
-          });
-        } else {
-          common_vendor.index.navigateTo({
-            url: "/pages/function_doc/function_doc"
-          });
-        }
-      }, 1500);
     }
     function handleSlider(e) {
       info.pain_level_custom = e.detail.value;

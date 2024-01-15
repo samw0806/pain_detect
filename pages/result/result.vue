@@ -23,8 +23,18 @@
 					二级疼痛
 				</view> -->
 				
-				<image :load="image==''? true : false" class="medium" :src="image" mode="" style="height: 700rpx;width: 650rpx;margin-top: 20rpx;"></image>
+				<image v-if="show" :load="image==''? true : false" class="medium" :src="image" mode="" style="height: 700rpx;width: 650rpx;margin-top: 20rpx;"></image>
 				
+				    <video
+					  v-else
+				      id="myVideo"
+				      :src="src"
+				      :controls="controls"
+				      :autoplay="autoplay"
+				      style="width: 100%; height: 300px;"
+				    ></video>
+				
+
 				<view @click="handleBack" class="medium" style="font-size: 30rpx;margin-top: 20rpx;">
 					<uni-icons type="refresh-filled" size="20" color="#339EE6" style="display: inline-block;vertical-align:-8rpx;"></uni-icons>
 					<view class="" style="display: inline-block;color: #339EE6;font-weight: 400;">
@@ -51,9 +61,11 @@
 	const searchStoreTemp = searchStore()
 
 	const uploadStoreTemp = uploadStore()
-	
+	const show = ref(true)
 	const image = ref('')
-	
+	const src = ref('')
+	const controls = ref(true)
+	const autoplay = ref(false)
 	const user = reactive({
 		name:''
 	})
@@ -66,8 +78,16 @@
 			uni.hideLoading();
 		}, 2000);
 		user.name = searchStoreTemp.searchInfo.user_name
-		image.value = uploadStoreTemp.uploadImage
+		// image.value = uploadStoreTemp.uploadImage
+		
 		console.log(image.value);
+		if(uploadStoreTemp.uploadType === 'image'){
+			image.value = uploadStoreTemp.uploadImage
+		}
+		else{
+			src.value = uploadStoreTemp.uploadImage
+			show.value = false
+		}
 	})
 	
 	function handleBack(){

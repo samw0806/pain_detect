@@ -143,6 +143,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/lg_rg/lg_rg",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

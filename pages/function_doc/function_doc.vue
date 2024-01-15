@@ -4,7 +4,7 @@
 		<view class="">
 			<text class="title_2">欢迎登录疼痛分级系统</text>
 		</view>
-		<view>
+		<view style="margin-top: 100rpx;">
 			<image @click="handleClick('/pages/search/search')" src="../../static/fun1.jpg" mode=""></image>
 			<image @click="handleClick('/pages/communicate_doc/communicate_doc')" src="../../static/fun2.jpg" mode=""></image>
 			<image @click="handleClick('/pages/update_info/update_info')" src="../../static/fun3.jpg" mode=""></image>
